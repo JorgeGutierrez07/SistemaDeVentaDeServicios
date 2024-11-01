@@ -1,5 +1,5 @@
 <body class="d-flex flex-column vh-100">
-	<header class="bg-dark text-white p-3">
+	<header class=" text-white p-3" style="background-color: #2ABFBF">
         <div class="d-flex justify-content-between align-items-center">
         
 				<svg class=" text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
@@ -10,39 +10,39 @@
         </div>
     </header>	
 	<div class="container d-flex justify-content-center align-items-center vh-100">
-		<div class="col-xl-8">
-			<div class="card bg-dark text-white" style="border-radius: 1rem;">
+		<div class="col-xl-8 " >
+			<div class="card text-black" style="border-radius: 1rem; background-color: #2ABFBF ">
 				<div class="card-body p-5 text-center">
-					<h2 class="fw-bold mb-2 text-uppercase">Registro usuario</h2>
-					<p class="text-white-50 mb-2">Por favor ingresa tus datos para crear tu perfil</p>
+					<h2 class=" text-white fw-bold mb-2 text-uppercase">Registro usuario</h2>
+					<p class="text-white mb-2">Por favor ingresa tus datos para crear tu perfil</p>
 					<form  action="" method="POST">
 						<div class="d-flex gap-3">
-							<div data-mdb-input-init class="form-outline form-white w-100 mb-2">
-								<input type="text" name="nombre" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" required class="form-control form-control-lg" />
-								<label class="form-label" for="nombre">Nombre</label>
+							<div class="w-100 form-floating mb-3">
+								<input type="text" class="form-control" id="floatingInput" placeholder="Nombre">
+								<label for="floatingInput">Nombre</label>
 							</div>
 							
-							<div data-mdb-input-init class="form-outline form-white w-100 mb-2">
-								<input type="password" name="apellido" pattern="^[a-zA-Z0-9]{6,}$" maxlength="100" required class="form-control form-control-lg" />
-								<label class="form-label" for="apellido">Apellido</label>
+							<div class="w-100 form-floating mb-3">
+								<input type="text" class="form-control" id="floatingInput" placeholder="Nombre">
+								<label for="floatingInput">Apellido</label>
 							</div>
 
 						</div>
 						<div class="d-flex gap-3">
-							<div data-mdb-input-init class="form-outline w-100 form-white mb-2">
-								<input type="email" name="correo" pattern="^[a-zA-Z0-9]{6,}$" maxlength="100" required class="form-control form-control-lg" />
-								<label class="form-label" for="correo">Correo electrónico</label>
+							<div class="w-100 form-floating mb-3">
+								<input type="email" class="form-control" id="floatingInput" placeholder="Nombre">
+								<label for="floatingInput">Corre</label>
 							</div>
-							<div data-mdb-input-init class="form-outline w-100 form-white mb-2">
-								<input type="text" name="usuario" pattern="^[a-zA-Z0-9]{6,}$" maxlength="100" required class="form-control form-control-lg" />
-								<label class="form-label" for="usuario">Usuario</label>
+							<div class="w-100 form-floating mb-3">
+								<input type="text" class="form-control" id="floatingInput" placeholder="Nombre">
+								<label for="floatingInput">Usuario</label>
 							</div>
 						</div>
 
 						<div class="d-flex justify-content-center">
-							<div data-mdb-input-init class="form-outline  form-white mb-2">
-								<input type="password" name="clave" pattern="^[a-zA-Z0-9]{6,}$" maxlength="100" required class="form-control form-control-lg" />
-								<label class="form-label" for="clave">Clave</label>
+							<div class="pb-3 form-floating mb-3">
+								<input type="password" class="form-control" id="floatingInput" placeholder="Nombre">
+								<label for="floatingInput">Clave</label>
 							</div>
 						</div>
 							
@@ -51,7 +51,7 @@
 						</div>
 
 						<div>
-							<p class="mb-0">¿Ya tienes cuenta? <a href="/SistemaDeVentaDeServicios/login" class="text-white fw-bold"> Inicia sésion</a></p>
+							<p class="text-white mb-0">¿Ya tienes cuenta? <a href="/SistemaDeVentaDeServicios/login" class="text-white fw-bold"> Inicia sésion</a></p>
 						</div>
 					</form>
 				</div>
