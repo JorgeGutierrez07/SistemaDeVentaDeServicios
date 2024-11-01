@@ -22,7 +22,7 @@
                                 </div>
                                 
                                 <div>
-                                    <p class="mb-0">¿No tienes una cuenta? <a href="" class="text-white-50 fw-bold"> Registrate ahora</a>
+                                    <p class="mb-0">¿No tienes una cuenta? <a href="/SistemaDeVentaDeServicios/registroUsuario" class="text-white-50 fw-bold"> Registrate ahora</a>
                                     </p>
                                 </div>
                             </form>

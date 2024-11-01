@@ -1,6 +1,6 @@
 <?php
 #DEFINIMOS INFROMACION DE LA APLICACION
-const APP_URL="http://localhost/SistemaDeVentaDeServicios/";
+const APP_URL="http://localhost:8081/SistemaDeVentaDeServicios/";
 const APP_NAME="VENTA SERVICIOS";
 const APP_SESSION_NAME="CRUD";
 
