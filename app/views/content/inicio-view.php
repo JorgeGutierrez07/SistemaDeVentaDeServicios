@@ -51,10 +51,10 @@
 </div>
 
 <div class="d-flex justify-content-center my-5">
-    <a href="pagina.html" class="btn custom-btn1">Iniciar Sesión</a>
+    <a href="<?php echo APP_URL?>login/" class="btn custom-btn1">Iniciar Sesión</a>
 </div>
 
 <div class="d-flex justify-content-center my-4">
-    <a href="pagina.html" class="btn custom-btn">Regístrate Como Usuario</a>
-    <a href="pagina.html" class="btn custom-btn ms-3">Regístrate Como Usuario</a>
+    <a href="<?php echo APP_URL?>registroCliente/" class="btn custom-btn">Regístrate Como Usuario</a>
+    <a href="<?php echo APP_URL?>registroProveedor/" class="btn custom-btn ms-3">Regístrate Como Proovedor</a>
 </div>
