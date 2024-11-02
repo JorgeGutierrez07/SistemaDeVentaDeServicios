@@ -18,9 +18,9 @@ class viewsModel
                 // Si no existe, mostrar la página de error 404
                 $contenido = "404";
             }
-        } elseif ($vista == "login" || $vista == "index") {
+        } elseif ($vista == "inicio" || $vista == "index") {
             // Si la vista es 'login', asignar 'login' a $contenido
-            $contenido = "login";
+            $contenido = "inicio";
         } elseif ($vista == "userRegister") {
             $contenido = "userRegister";
         } else {
