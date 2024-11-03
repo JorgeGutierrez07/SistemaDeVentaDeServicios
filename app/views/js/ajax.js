@@ -32,6 +32,7 @@ formularios_ajax.forEach(formulario => {
                   fetch(action, config)
                   .then(respuesta => respuesta.json())
                   .then(respuesta => {
+                    console.log("Respuesta del servidor:", respuesta);
                     return alerta_ajax(respuesta);
                   });
                 }

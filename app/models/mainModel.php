@@ -83,7 +83,7 @@ class mainModel
          $sql = $this->conectar()->prepare($query);
 
          foreach($datos as $clave){
-            $sql->binParam($clave["campo_marcador"], $clave["campo_valor"]);
+            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
          }
 
          $sql->execute();
