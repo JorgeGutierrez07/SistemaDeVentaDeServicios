@@ -2,7 +2,7 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-primary text-white" style="border-radius: 1rem;">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
                         <div class="mb-md-5 mt-md-4 pb-5">
                             <h2 class="fw-bold mb-2 text-uppercase">Inicia Sesión</h2>
@@ -27,9 +27,17 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+
+                        <button class="btn fw-bold rounded-pill py-2 w-100" type="submit" style="background-color: #27BEC2; color: white;">
+                            Iniciar Sesión
+                        </button>
+
+                        <a href="#" class="d-block text-secondary text-center mt-3 text-decoration-underline">
+                            ¿Has olvidado la contraseña?
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
