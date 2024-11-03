@@ -7,7 +7,7 @@ class viewsModel
     protected function obtenerVistasModelo($vista)
     {
         // Lista blanca de vistas permitidas
-        $listaBlanca = ["registro", "cargaFactura"];
+        $listaBlanca = ["registro"];
         // Comprobación si la vista está en la lista blanca
         if (in_array($vista, $listaBlanca)) {
             // Verificar si el archivo de vista existe
@@ -18,9 +18,9 @@ class viewsModel
                 // Si no existe, mostrar la página de error 404
                 $contenido = "404";
             }
-        } elseif ($vista == "login" || $vista == "index") {
+        } elseif ($vista == "inicio" || $vista == "index") {
             // Si la vista es 'login', asignar 'login' a $contenido
-            $contenido = "login";
+            $contenido = "inicio";
         } elseif ($vista == "userRegister") {
             $contenido = "userRegister";
         } else {
