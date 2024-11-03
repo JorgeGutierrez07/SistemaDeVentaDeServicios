@@ -9,8 +9,12 @@
 	if(isset($_POST['modulo_usuario'])){
 
 		$insUsuario = new userController();
-        	
-	}else{
+		if($_POST['modulo_usuario'] == "registar"){
+			echo $insUsuario->registrarClienteControlador();
+		}
+	}
+
+	else{
 		session_destroy();
 		header("Location: ".APP_URL."inicio/");
 	}
