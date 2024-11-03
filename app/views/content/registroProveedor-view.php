@@ -34,27 +34,27 @@
             <div class="mx-auto" style="max-width: 500px;">
                 <div class="border border-1 rounded-3 p-3">
                     <div class="form-group form-floating py-2 mb-3">
-                        <input type="text" class="form-control form-control-lg" name = "nombre" id="nombre" placeholder="Nombre" style="background-color: #F2F2F2;" required>
+                        <input type="text" class="form-control form-control-lg" name = "nombre" id="nombre" placeholder="Nombre" style="background-color: #F2F2F2;">
                         <label for="floatingInput">Nombre</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" name = "apellidos" id="apellido" placeholder="Apellido" style="background-color: #F2F2F2;" required>
+                        <input type="text" class="form-control form-control-lg" name = "apellidos" id="apellido" placeholder="Apellido" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Apellidos</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="email" class="form-control form-control-lg" name = "email" id="email" placeholder="hola@sitioincreible.com" style="background-color: #F2F2F2;" required>
+                        <input type="email" class="form-control form-control-lg" name = "email" id="email" placeholder="hola@sitioincreible.com" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Correo Electrónico</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" name = "nombre_empresa" id="empresa" placeholder="Empresa" style="background-color: #F2F2F2;" required>
+                        <input type="text" class="form-control form-control-lg" name = "nombre_empresa" id="empresa" placeholder="Empresa" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Nombre de la Empresa</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" name = "nombre_usuario" id="usuario" placeholder="usuario" style="background-color: #F2F2F2;" required>
+                        <input type="text" class="form-control form-control-lg" name = "nombre_usuario" id="usuario" placeholder="usuario" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Nombre de Usuario</label>
                     </div>
                     <div class="form-group form-floating py-2 mb-3">
-                        <input type="password" class="form-control form-control-lg" name = "clave" id="clave" placeholder="*****" style="background-color: #F2F2F2;" required>
+                        <input type="password" class="form-control form-control-lg" name = "clave" id="clave" placeholder="*****" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Clave</label>
                     </div>
                 </div>

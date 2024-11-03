@@ -13,9 +13,9 @@
 			$nEmpresa = $this->limpiarCadena($_POST['nombre_empresa']);
 			$nUsuario = $this->limpiarCadena($_POST['nombre_usuario']);
 			$clave = $this->limpiarCadena($_POST['clave']);
-			$curp = $this->limpiarCadena($_POST['curp']);
-			$rfc = $this->limpiarCadena($_POST['rfc']);
-			$acta = $this->limpiarCadena($_POST['acta']);
+			$curp = $this->limpiarCadena($_FILES['curp']['tmp_name']);
+			$rfc = $this->limpiarCadena($_FILES['rfc']['tmp_name']);
+			$acta = $this->limpiarCadena($_FILES['acta']['tmp_name']);
 
 			if($nombre == "" || $apellidos == "" || $email == "" ||
 			 $nEmpresa == "" || $nUsuario == "" || $clave == "" ||
