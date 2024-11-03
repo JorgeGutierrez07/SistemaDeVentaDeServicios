@@ -26,7 +26,7 @@
         </div>
     </div>
 </nav>
-<form>
+<form class = "FormularioProveedor" action = "#" method = "POST">
     <div class="row justify-content-center py-2">
         <!-- Primera columna de campos de texto -->
         <div class="col-12 col-md-6 mb-4 mb-md-0">

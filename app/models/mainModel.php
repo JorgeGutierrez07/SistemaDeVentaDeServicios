@@ -60,4 +60,8 @@ class mainModel
             return true;
         }
     }
+
+    protected function guardarDatos($tabla.$datos){
+        
+    }
 }
