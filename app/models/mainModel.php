@@ -13,10 +13,13 @@ class mainModel
     private $db = DB_NAME;
     private $user = DB_USER;
     private $pass = DB_PASS;
-    /*----------  Funcion conectar a BD  ----------*/
+    private $port = DB_PORT;
+   
     protected function conectar()
     {
-        $conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
+        // Modifica la cadena de conexión para incluir el puerto
+        $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
+        $conexion = new PDO($dsn, $this->user, $this->pass);
         $conexion->exec("SET CHARACTER SET utf8");
         return $conexion;
     }

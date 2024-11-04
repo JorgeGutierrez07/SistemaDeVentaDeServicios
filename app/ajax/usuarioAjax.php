@@ -6,12 +6,12 @@
 	
 	use app\controllers\userController;
 
-	if(isset($_POST['modulo_usuario'])){
+	if(isset($_POST['modulo_cliente'])){
 
 		$insUsuario = new userController();
-		if($_POST['modulo_usuario'] == "registar"){
+		if($_POST['modulo_cliente'] == "registrarCliente"){
 			echo $insUsuario->registrarClienteControlador();
-		}
+		}  
 	}
 
 	else{

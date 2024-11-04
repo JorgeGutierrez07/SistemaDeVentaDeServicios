@@ -1,4 +1,4 @@
-const formulario = document.querySelector('#formulario');
+const formulario = document.querySelector('#formularioCliente');
 
 
 formulario.addEventListener("submit", (e) =>{
@@ -17,7 +17,6 @@ formulario.addEventListener("submit", (e) =>{
 			let data = new FormData(formulario);
 			let method = formulario.getAttribute("method");
 			let action = formulario.getAttribute("action");
-
 			let encabezados = new Headers();
 			let config = {
 				method: method,
@@ -26,15 +25,10 @@ formulario.addEventListener("submit", (e) =>{
 				cache: 'no-cache',
 				body: data
 			};
-			
-			
 
 			fetch(action, config)
-			.then(respuesta =>{ 
-					respuesta.json();
-			})
-			.then( respuesta =>{
-				console.log(respuesta)
+			.then((respuesta) => respuesta.json())
+			.then( (respuesta) =>{
 				return alertas_ajax(respuesta);
 			});
 		}
