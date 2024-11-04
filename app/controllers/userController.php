@@ -126,18 +126,49 @@
 				]
 			];
 			
-			
-			
 			// Aquí va tu lógica de inserción a la base de datos
 			$registrar_usuario = $this->guardarDatos("usuarios", $cliente_datos_reg);
+
 		
 			if ($registrar_usuario->rowCount() == 1) {
-				$alerta = [
-					"tipo" => "limpiar",
-					"titulo" => "Usuario registrado",
-					"texto" => "Usuario " . $nombre . " " . $apellido . " registrado correctamente",
-					"icono" => "success"
+				// Obtiene el ID del usuario recién insertado
+				$usuario_id = $this->getLastInsertId();
+
+				// Prepara los datos para la inserción en estado_solicitud
+				$estado_datos = [
+					[
+						"campo_nombre" => "ID_Usuario",
+						"campo_marcador" => ":Usuario_id",
+						"campo_valor" => $usuario_id // El ID del usuario recién registrado
+					],
+					[
+						"campo_nombre" => "Estado",
+						"campo_marcador" => ":Pendiente",
+						"campo_valor" => 'pendiente'
+					]
 				];
+				
+				// Inserción del estado de solicitud
+				$registrar_estado = $this->guardarDatos("estado_solicitud", $estado_datos);
+
+				// Verifica si la solicitud se insertó correctamente
+                if ($registrar_estado->rowCount() == 1) {
+                    $alerta = [
+                        "tipo" => "limpiar",
+                        "titulo" => "Usuario registrado",
+                        "texto" => "Usuario " . $nombre . " " . $apellido . " registrado correctamente",
+                        "icono" => "success"
+                    ];
+                } else {
+                    $alerta = [
+                        "tipo" => "simple",
+                        "titulo" => "Error al registrar el estado",
+                        "texto" => "No se pudo registrar el estado de solicitud",
+                        "icono" => "error"
+                    ];
+                }
+				return json_encode($alerta);
+	
 			}  else {
 				$alerta = [
 					"tipo" => "simple",
