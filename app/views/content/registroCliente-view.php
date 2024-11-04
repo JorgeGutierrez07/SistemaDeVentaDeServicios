@@ -26,16 +26,16 @@
         </div>
     </div>
 </nav>
-<form id="formulario" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off">
+<form id="formularioCliente" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-8">
             <div class="mx-auto border border-1 rounded-3 p-4">
-                <input type="hidden" name="modulo_usuario" value="registrar">
+                <input type="hidden" name="modulo_cliente" value="registrarCliente">
                 <div class="row">
-                    <div class="col-12 col-md-6 pe-md-3">
+                    <div class="col-12 col-md-6 pe-m-3">
                         <!-- Name -->
                         <div class="form-group form-floating mb-5">
-                            <input type="text" class="form-control form-control-lg" name="nombre" placeholder="Nombre" style="background-color: #F2F2F2;" required>
+                            <input type="text" class="form-control form-control-lg" name="nombre" placeholder="Nombre" style="background-color: #F2F2F2;"  required>
                             <label for="nombre">Nombre</label>
                         </div>
 
@@ -47,7 +47,7 @@
 
                         <!-- Email -->
                         <div class="form-group form-floating mb-5">
-                            <input type="email" class="form-control form-control-lg" name="email" placeholder="correo@ejemplo.com" style="background-color: #F2F2F2;" required>
+                            <input type="text" class="form-control form-control-lg" name="email" placeholder="correo@ejemplo.com" style="background-color: #F2F2F2;" required>
                             <label for="email">Correo Electrónico</label>
                         </div>
                     </div>
