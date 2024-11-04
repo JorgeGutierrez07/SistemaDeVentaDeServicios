@@ -3,6 +3,8 @@
 namespace app\models;
 
 use \PDO;
+use PDOException;
+
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
     require_once __DIR__ . "/../../config/server.php";
@@ -14,14 +16,15 @@ class mainModel
     private $user = DB_USER;
     private $pass = DB_PASS;
     private $port = DB_PORT;
-   
+    private $conexion;
+
     protected function conectar()
     {
         // Modifica la cadena de conexión para incluir el puerto
         $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
-        $conexion = new PDO($dsn, $this->user, $this->pass);
-        $conexion->exec("SET CHARACTER SET utf8");
-        return $conexion;
+        $this->conexion = new PDO($dsn, $this->user, $this->pass);
+        $this->conexion->exec("SET CHARACTER SET utf8");
+        return $this->conexion;
     }
 
 
@@ -33,6 +36,44 @@ class mainModel
         return $sql;
     }
 
+    /* GUARDAR */
+
+    protected function guardarDatos($tabla, $datos){
+        
+        // Construir la consulta INSERT
+        $query="INSERT INTO $tabla (";
+
+        $C=0;
+        foreach ($datos as $clave){
+            if($C>=1){ $query.=","; }
+            $query.=$clave["campo_nombre"];
+            $C++;
+        }
+        
+        $query.=") VALUES(";
+
+        $C=0;
+        foreach ($datos as $clave){
+            if($C>=1){ $query.=","; }
+            $query.=$clave["campo_marcador"];
+            $C++;
+        }
+
+        $query.=")";
+        $sql=$this->conectar()->prepare($query);
+
+        foreach ($datos as $clave){
+            $sql->bindParam($clave["campo_marcador"],$clave["campo_valor"]);
+        }
+
+        $sql->execute();
+
+        return $sql;
+    }
+
+    public function getLastInsertId() {
+        return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
+    }
 
     /*----------  Funcion limpiar cadenas  ----------*/
     public function limpiarCadena($cadena)

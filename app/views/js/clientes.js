@@ -36,6 +36,15 @@ formulario.addEventListener("submit", (e) =>{
 			.then( respuesta =>{
 				console.log(respuesta)
 				return alertas_ajax(respuesta);
+			})
+			.catch((error) => {
+				// Muestra una alerta si hay un error en la red o en la respuesta
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: error.message,
+					confirmButtonText: 'Aceptar'
+				});
 			});
 		}
 	})
