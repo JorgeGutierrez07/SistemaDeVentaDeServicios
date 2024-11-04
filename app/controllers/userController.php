@@ -2,6 +2,7 @@
 
 	namespace app\controllers;
 	use app\models\mainModel;
+	use PDOException;
 
 	class userController extends mainModel{ 
 		# Controlador para registrar el cliente
@@ -91,5 +92,61 @@
 				];
 				return json_encode($alerta);
 			} 
-		}
+
+			$cliente_datos_reg = [
+				[
+					"campo_nombre" => "Nombre",
+					"campo_marcador" => ":Nombre",
+					"campo_valor" => $nombre
+				],
+				[
+					"campo_nombre" => "Apellidos",
+					"campo_marcador" => ":Apellidos",
+					"campo_valor" => $apellido
+				],
+				[
+					"campo_nombre" => "Usuario",
+					"campo_marcador" => ":Usuario",
+					"campo_valor" => $usuario
+				],
+				[
+					"campo_nombre" => "Correo",
+					"campo_marcador" => ":Email",
+					"campo_valor" => $email
+				],
+				[
+					"campo_nombre" => "Contraseña",
+					"campo_marcador" => ":Clave",
+					"campo_valor" => $clave
+				],
+				[
+					"campo_nombre" => "Tipo_Usuario",
+					"campo_marcador" => ":Cliente",
+					"campo_valor" => "cliente"
+				]
+			];
+			
+			
+			
+			// Aquí va tu lógica de inserción a la base de datos
+			$registrar_usuario = $this->guardarDatos("usuarios", $cliente_datos_reg);
+		
+			if ($registrar_usuario->rowCount() == 1) {
+				$alerta = [
+					"tipo" => "limpiar",
+					"titulo" => "Usuario registrado",
+					"texto" => "Usuario " . $nombre . " " . $apellido . " registrado correctamente",
+					"icono" => "success"
+				];
+			}  else {
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Ocurrió un error inesperado",
+					"texto" => "No se pudieron insertar los datos",
+					"icono" => "error"
+				];
+			}
+			return json_encode($alerta);
+		} 
 	}
+	

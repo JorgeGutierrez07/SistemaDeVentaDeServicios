@@ -3,6 +3,8 @@
 namespace app\models;
 
 use \PDO;
+use PDOException;
+
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
     require_once __DIR__ . "/../../config/server.php";
@@ -32,6 +34,42 @@ class mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* GUARDAR */
+
+    protected function guardarDatos($tabla, $datos){
+        
+            // Construir la consulta INSERT
+            $query="INSERT INTO $tabla (";
+
+			$C=0;
+			foreach ($datos as $clave){
+				if($C>=1){ $query.=","; }
+				$query.=$clave["campo_nombre"];
+				$C++;
+			}
+			
+			$query.=") VALUES(";
+
+			$C=0;
+			foreach ($datos as $clave){
+				if($C>=1){ $query.=","; }
+				$query.=$clave["campo_marcador"];
+				$C++;
+			}
+
+			$query.=")";
+			$sql=$this->conectar()->prepare($query);
+
+			foreach ($datos as $clave){
+				$sql->bindParam($clave["campo_marcador"],$clave["campo_valor"]);
+			}
+
+			$sql->execute();
+
+			return $sql;
+    }
+
 
 
     /*----------  Funcion limpiar cadenas  ----------*/
