@@ -76,7 +76,7 @@
 				]
 			 ];
 
-			 $regitrar_proveedor = $this->guardarDatos("proveedores", $usuario_datos_reg);
+			 $regitrar_proveedor = $this->guardarDatosProveedor("proveedores", $usuario_datos_reg);
 
 			 if($regitrar_proveedor->rowCount()==1){
 				$alerta = [

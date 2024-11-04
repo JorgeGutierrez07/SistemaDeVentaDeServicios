@@ -61,7 +61,7 @@ class mainModel
         }
     }
 
-    protected function guardarDatos($tabla, $datos){
+    protected function guardarDatosProveedor($tabla, $datos){
         $query = "INSERT INTO $tabla (";
 
         $C = 0;

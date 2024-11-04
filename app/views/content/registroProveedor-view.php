@@ -92,3 +92,4 @@
         </div>
     </div>
 </form>
+<script src="<?php echo APP_URL; ?>app/views/js/ajaxProveedor.js" ></script>
