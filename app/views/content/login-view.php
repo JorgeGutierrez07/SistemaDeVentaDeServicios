@@ -18,7 +18,7 @@
         <span class="navbar-brand text-white fw-bold ms-4 fs-1">LOGO</span>
         <div class="position-absolute start-50 translate-middle-x">
             <div class="bg-white py-2 px-4 rounded">
-                <h1 class="fs-5 text-dark m-0">REGISTRO CLIENTE</h1>
+                <h1 class="fs-5 text-dark m-0">LOGIN</h1>
             </div>
         </div>
         <div class="px-3">
