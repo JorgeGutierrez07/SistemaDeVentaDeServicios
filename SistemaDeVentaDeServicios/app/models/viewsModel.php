@@ -7,7 +7,7 @@ class viewsModel
     protected function obtenerVistasModelo($vista)
     {
         // Lista blanca de vistas permitidas
-        $listaBlanca = ["cargarFactura", "inicio", "inicoCliente", "login", "registroCliente", "registroProveedor", "registroUsuario"];
+        $listaBlanca = ["registroProveedor","login","registroCliente","cargarFactura","inicioCliente", "validacionRegistros"];
         // Comprobación si la vista está en la lista blanca
         if (in_array($vista, $listaBlanca)) {
             // Verificar si el archivo de vista existe
