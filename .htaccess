@@ -1,3 +1,8 @@
 RewriteEngine On
 Options All -Indexes
+
+# Excluir procesarRecuperacion.php de la redirección
+RewriteCond %{REQUEST_URI} !^/SistemaDeVentaDeServicios/app/controllers/procesarRecuperacion.php$
+
+# Redirigir todas las demás rutas
 RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1

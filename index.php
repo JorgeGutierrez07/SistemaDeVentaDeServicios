@@ -9,7 +9,7 @@ require_once "./app/views/inc/session_start.php";
 if (isset($_GET['views'])) {
     $url = explode("/", $_GET['views']);
 } else {
-    $url = ["login"];
+    $url = ["inicio"];
 }
 
 ?>
@@ -30,7 +30,7 @@ if (isset($_GET['views'])) {
     $viewsController = new viewsController();
     $vista = $viewsController->obtenerVistasControlador($url[0]);
 
-    if ($vista == "login" || $vista == "404") {
+    if ($vista == "inicio" || $vista == "404" || $vista == "registroCliente" || $vista == "registroProveedor" || $vista == "login") {
         require_once "./app/views/content/" . $vista . "-view.php";
     } else {
         require_once $vista;
