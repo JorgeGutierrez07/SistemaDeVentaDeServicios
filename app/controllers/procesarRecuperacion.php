@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
+            
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $contraseñaHash = $row["Contraseña"]; 
 
