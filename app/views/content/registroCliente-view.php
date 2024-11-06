@@ -30,7 +30,7 @@
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-8">
             <div class="mx-auto border border-1 rounded-3 p-4">
-                <input type="hidden" name="modulo_cliente" value="registrarCliente">
+                <input type="hidden" name="modulo_usuario" value="registrarCliente">
                 <div class="row">
                     <div class="col-12 col-md-6 pe-m-3">
                         <!-- Name -->

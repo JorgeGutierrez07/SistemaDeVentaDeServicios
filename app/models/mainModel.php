@@ -3,7 +3,12 @@
 namespace app\models;
 
 use \PDO;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
     require_once __DIR__ . "/../../config/server.php";
@@ -16,10 +21,9 @@ class mainModel
     private $pass = DB_PASS;
     private $port = DB_PORT;
     private $conexion;
-
+    /*----------  Funcion conectar a BD  ----------*/
     protected function conectar()
     {
-        // Modifica la cadena de conexión para incluir el puerto
         $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
         $this->conexion = new PDO($dsn, $this->user, $this->pass);
         $this->conexion->exec("SET CHARACTER SET utf8");
@@ -101,6 +105,78 @@ class mainModel
             return false;
         } else {
             return true;
+        }
+    }
+
+    /*----------  Funcion para ejecutar una consulta INSERT preparada  ----------*/
+    protected function guardarDatos($tabla, $datos)
+    {
+
+        $query = "INSERT INTO $tabla (";
+
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_nombre"];
+            $C++;
+        }
+
+        $query .= ") VALUES(";
+
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_marcador"];
+            $C++;
+        }
+
+        $query .= ")";
+        $sql = $this->conectar()->prepare($query);
+
+        foreach ($datos as $clave) {
+            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
+        }
+
+        $sql->execute();
+
+        return $sql;
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
+    }
+    public function enviarCorreo($destino, $mensaje)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            // Configuración del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'ecom11.faustino.sanchez@gmail.com';
+            $mail->Password   = 'nxzubbwuzxwtqmqr';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            $mail->setFrom('ecom11.faustino.sanchez@gmail.com', 'SistemaDeVenta');
+            $mail->addAddress($destino);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Recuperacion de Contraseña';
+            $mail->Body    = $mensaje;
+            $mail->AltBody = strip_tags($mensaje);
+            if ( $mail->send()) {
+                return true;
+            }else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return "El correo no pudo enviarse. Error: {$mail->ErrorInfo}";
         }
     }
 }
