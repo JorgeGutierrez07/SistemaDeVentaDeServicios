@@ -13,14 +13,15 @@
 			$email = $this->limpiarCadena($_POST['email']);
 			$nEmpresa = $this->limpiarCadena($_POST['nombre_empresa']);
 			$nUsuario = $this->limpiarCadena($_POST['nombre_usuario']);
-			$clave = $this->limpiarCadena($_POST['clave']);
+			$password = $this->limpiarCadena($_POST['clave']);
 			#La operacion limpiar afecta la ruta
 			$curp = $_FILES['curp']['tmp_name'];
 			$rfc = $_FILES['rfc']['tmp_name'];
 			$acta = $_FILES['acta']['tmp_name'];
 
+			//Comprobacion que no esten vacios
 			if($nombre == "" || $apellidos == "" || $email == "" ||
-			 $nEmpresa == "" || $nUsuario == "" || $clave == "" ||
+			 $nEmpresa == "" || $nUsuario == "" || $password == "" ||
 			 $curp == "" || $rfc == "" || $acta == "") {
 				$alerta = [
 					"tipo"=>"simple",
@@ -31,6 +32,7 @@
 				return json_encode($alerta);
 			 }
 
+			 //Comprobacion del peso de archivos
 			 $limite_tamano = 2 * 1024 * 1024;
 			 if($_FILES['curp']['size'] > $limite_tamano || $_FILES['rfc']['size'] > $limite_tamano || $_FILES['acta']['size'] > $limite_tamano) {
 				$alerta = [
@@ -46,13 +48,120 @@
 			 $contenidoRFC = file_get_contents($rfc);
 			 $contenidoACTA = file_get_contents($acta);
 
-			 #Se cambio la linea (max_allowed_packet=16M) en my.ini de xampp para que acepte todos los archivos
+			 if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nombre)){
+				// Respuesta en caso de éxito
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Error",
+					"texto" => "El nombre no tiene formato valido",
+					"icono" => "error"
+				];
+				return json_encode($alerta);
+		
+			}
+			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $apellidos)){
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Error",
+					"texto" => "El apellido no tiene formato valido",
+					"icono" => "error"
+				];
+				return json_encode($alerta);
 
-			 $usuario_datos_reg = [
+			}
+			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nUsuario)){
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Error",
+					"texto" => "El usuario no tiene formato valido",
+					"icono" => "error"
+				];
+				return json_encode($alerta);
+
+			}
+			if ($email!=''){
+				if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+					$check_email = $this->ejecutarConsulta("SELECT Correo FROM usuarios WHERE Correo='$email'");
+					if($check_email->rowCount() > 0){
+						$alerta = [
+							"tipo" => "simple",
+							"titulo" => "Error",
+							"texto" => "El correo ya existe en el sistema",
+							"icono" => "error"
+						];
+						return json_encode($alerta);
+	
+					}
+				} else {
+					$alerta = [
+						"tipo" => "simple",
+						"titulo" => "Error",
+						"texto" => "El correo no tiene formato valido",
+						"icono" => "error"
+					];
+					return json_encode($alerta);
+				}
+			}
+
+			 if($password != ''){
+				$clave=password_hash($password, PASSWORD_BCRYPT, ["cost"=>10]);
+			}
+
+			 //Se cambio la linea (max_allowed_packet=16M) en my.ini de xampp para que acepte todos los archivos
+
+			 //Arreglo para insertar en usuario
+			 $usuario_datos = [
+				[
+					"campo_nombre" => "Usuario ",
+					"campo_marcador" => ":usuario", #Cambiar por el id recuperado de la nueva insercion 
+					"campo_valor" => $nUsuario
+				],
+				[
+					"campo_nombre" => "Nombre",
+					"campo_marcador" => ":nombre",
+					"campo_valor" => $nombre
+				],
+				[
+					"campo_nombre" => "Apellidos",
+					"campo_marcador" => ":apellidos",
+					"campo_valor" => $apellidos
+				],
+				[
+					"campo_nombre" => "Correo",
+					"campo_marcador" => ":correo",
+					"campo_valor" => $email
+				],
+				[
+					"campo_nombre" => "Contraseña",
+					"campo_marcador" => ":pass",
+					"campo_valor" => $clave
+				],
+				[
+					"campo_nombre" => "Tipo_Usuario",
+					"campo_marcador" => ":tusuario",
+					"campo_valor" => "proveedor"
+				]
+			 ];
+			 $registrar_usuario = $this->guardarDatosProveedor("usuarios", $usuario_datos);
+			//Arreglo para insertar en solicitud
+			 $solicitud_datos = [
+				[
+					"campo_nombre" => "ID_Usuario",
+					"campo_marcador" => ":idUsuario",
+					"campo_valor" => $registrar_usuario
+				],
+				[
+					"campo_nombre" => "Estado",
+					"campo_marcador" => ":estado",
+					"campo_valor" => "pendiente"
+				]
+			 ];
+			 //Arreglo para insertar en proveedor
+			 $proveedor_datos = [
 				[
 					"campo_nombre" => "ID_Usuario ",
-					"campo_marcador" => ":id", #Cambiar por el id recuperado de la nueva insercion 
-					"campo_valor" => "1"
+					"campo_marcador" => ":id",
+					"campo_valor" => $registrar_usuario
 				],
 				[
 					"campo_nombre" => "Nombre_de_Empresa",
@@ -76,16 +185,27 @@
 				]
 			 ];
 
-			 $regitrar_proveedor = $this->guardarDatosProveedor("proveedores", $usuario_datos_reg);
-
-			 if($regitrar_proveedor->rowCount()==1){
-				$alerta = [
-					"tipo"=>"success",
-					"titulo"=>"Registro exitoso",
-					"texto"=>"Tu solicitud se envio correctamente",
-					"icono"=>"success",
-					"url"=>"inicio"
-				];
+			 if(($registrar_usuario !== false) ){
+				$registrar_proveedor = $this->guardarDatosProveedor("proveedores", $proveedor_datos);
+				$registrar_solicitud = $this->guardarDatosProveedor("estado_solicitud", $solicitud_datos);
+				if($registrar_proveedor !==false && $registrar_solicitud !==false){
+					$alerta = [
+						"tipo"=>"success",
+						"titulo"=>"Registro exitoso",
+						"texto"=>"Tu solicitud se envio correctamente",
+						"icono"=>"success",
+						"url"=>"/SistemaDeVentaDeServicios/inicio"
+					];
+					return json_encode($alerta);
+				} else {
+					$alerta = [
+						"tipo"=>"fail",
+						"titulo"=>"Ocurrio un error inesperado",
+						"texto"=>"La solicitud no se envio, intentelo de nuevo",
+						"icono"=>"error"
+					];
+					return json_encode($alerta);
+				}
 			 } else {
 				$alerta = [
 					"tipo"=>"fail",
@@ -93,8 +213,8 @@
 					"texto"=>"La solicitud no se envio, intentelo de nuevo",
 					"icono"=>"error"
 				];
+				return json_encode($alerta);
 			 }
-			 return json_encode($alerta);
 		}
         
     }

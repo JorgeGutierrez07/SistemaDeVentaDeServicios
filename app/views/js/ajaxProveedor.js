@@ -1,5 +1,6 @@
 const formularios_ajax = document.querySelectorAll(".FormularioProveedor");
 
+//Alerta para confirmar el envio del fomulario para proveedor
 formularios_ajax.forEach(formulario => {
         
         formulario.addEventListener("submit", function(e){
@@ -40,6 +41,7 @@ formularios_ajax.forEach(formulario => {
         });
 });
 
+//Alertas genericas, para exito o fracaso de solicitud
 function alerta_ajax(alerta){
         if(alerta.tipo == "simple"){
             Swal.fire({

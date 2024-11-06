@@ -13,12 +13,13 @@ class mainModel
     private $db = DB_NAME;
     private $user = DB_USER;
     private $pass = DB_PASS;
+    private $conexion;
     /*----------  Funcion conectar a BD  ----------*/
     protected function conectar()
     {
-        $conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
-        $conexion->exec("SET CHARACTER SET utf8");
-        return $conexion;
+        $this->conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
+        $this->conexion->exec("SET CHARACTER SET utf8");
+        return $this->conexion;
     }
 
 
@@ -86,8 +87,11 @@ class mainModel
             $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
          }
 
-         $sql->execute();
-
-         return $sql;
+         if ($sql->execute()) {
+            // Obtener el último ID insertado
+            return $this->conexion->lastInsertId();
+        } else {
+            return false;
+        }
     }
 }

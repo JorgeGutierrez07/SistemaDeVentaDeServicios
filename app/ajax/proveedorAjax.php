@@ -10,6 +10,7 @@
 
 		$insProveedor = new userController();
 
+		//Seleccion del controlador a utilizar
         if($_POST['modulo_proveedor'] == "registrar") {
             echo $insProveedor->registrarProveedorControlador();
         }
