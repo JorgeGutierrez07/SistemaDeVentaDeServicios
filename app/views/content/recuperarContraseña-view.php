@@ -1,3 +1,4 @@
+
 <style>
     .clarity--home-line {
         display: inline-block;
@@ -18,7 +19,7 @@
         <span class="navbar-brand text-white fw-bold ms-4 fs-1">LOGO</span>
         <div class="position-absolute start-50 translate-middle-x">
             <div class="bg-white py-2 px-4 rounded">
-                <h1 class="fs-5 text-dark m-0">LOGIN</h1>
+                <h1 class="fs-5 text-dark m-0">RECUPERAR CONTRASEÑA</h1>
             </div>
         </div>
         <div class="px-3">
@@ -26,47 +27,34 @@
         </div>
     </div>
 </nav>
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-5">
             <div class="card shadow-sm border-0 rounded-4" style="background-color: white;">
                 <div class="card-body p-4">
-                    <form action="" method="POST">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-key" style="font-size: 3rem; color: #2ABFBF;"></i>
+                    </div>
+                    <h3 class="text-center mb-3">Recuperar Contraseña</h3>
+                    <form id="recuperar-form" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php">
                         <div class="mb-4">
-                            <label class="form-label text-secondary">CORREO ELECTRÓNICO</label>
+                            <label for="email" class="form-label text-secondary">CORREO ELECTRÓNICO</label>
+                            <input type="hidden" name="modulo_usuario" value="recuperarContraseña">
                             <input
                                 type="email"
-                                name="login_correo"
+                                name="email"
+                                id="email"
                                 class="form-control bg-light border-0 py-2"
-                                placeholder="hola@sitioincreible.co"
+                                placeholder="ejemplo@correo.com"
                                 required />
                         </div>
-
-                        <div class="mb-4">
-                            <label class="form-label text-secondary">CLAVE</label>
-                            <input
-                                type="password"
-                                name="login_clave"
-                                class="form-control bg-light border-0 py-2"
-                                placeholder="******"
-                                required />
-                        </div>
-
-                        <button class="btn fw-bold rounded-pill py-2 w-100" type="submit" style="background-color: #27BEC2; color: white;">
-                            Iniciar Sesión
+                        <button type="submit" class="btn fw-bold rounded-pill py-2 w-100" style="background-color: #2ABFBF; color: white;">
+                            Enviar Contraseña
                         </button>
-
-                        <a href="<?php echo APP_URL. "recuperarContraseña/" ?>" class="d-block text-secondary text-center mt-3 text-decoration-underline">
-                            ¿Has olvidado la contraseña?
-                        </a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php
-if (isset($_POST['login_correo']) && isset($_POST['login_clave'])) {
-    $insLogin->iniciarSesionControlador();
-}
-?>
