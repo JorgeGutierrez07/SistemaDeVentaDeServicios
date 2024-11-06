@@ -2,7 +2,7 @@
 
 	namespace app\controllers;
 	use app\models\mainModel;
-	use PDOException;
+
 
 	class userController extends mainModel{ 
 		# Controlador para registrar el cliente
@@ -44,7 +44,8 @@
 				return json_encode($alerta);
 
 			}
-			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $usuario)){
+			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,40}
+", $usuario)){
 				// Respuesta en caso de éxito
 				$alerta = [
 					"tipo" => "simple",

@@ -3,7 +3,6 @@
 namespace app\models;
 
 use \PDO;
-use PDOException;
 
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
