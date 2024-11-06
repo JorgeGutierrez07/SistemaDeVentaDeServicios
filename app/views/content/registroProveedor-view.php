@@ -26,34 +26,35 @@
         </div>
     </div>
 </nav>
-<form>
+<form class = "FormularioProveedor" action = "<?php echo APP_URL; ?>app/ajax/proveedorAjax.php" method = "POST" enctype="multipart/form-data">
+    <input type = "hidden" name = "modulo_proveedor" value = "registrar">
     <div class="row justify-content-center py-2">
         <!-- Primera columna de campos de texto -->
         <div class="col-12 col-md-6 mb-4 mb-md-0">
             <div class="mx-auto" style="max-width: 500px;">
                 <div class="border border-1 rounded-3 p-3">
                     <div class="form-group form-floating py-2 mb-3">
-                        <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Nombre" style="background-color: #F2F2F2;">
+                        <input type="text" class="form-control form-control-lg" name = "nombre" id="nombre" placeholder="Nombre" style="background-color: #F2F2F2;">
                         <label for="floatingInput">Nombre</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" id="apellido" placeholder="Apellido" style="background-color: #F2F2F2;">
+                        <input type="text" class="form-control form-control-lg" name = "apellidos" id="apellido" placeholder="Apellido" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Apellidos</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="email" class="form-control form-control-lg" id="email" placeholder="hola@sitioincreible.com" style="background-color: #F2F2F2;">
+                        <input type="email" class="form-control form-control-lg" name = "email" id="email" placeholder="hola@sitioincreible.com" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Correo Electrónico</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" id="empresa" placeholder="Empresa" style="background-color: #F2F2F2;">
+                        <input type="text" class="form-control form-control-lg" name = "nombre_empresa" id="empresa" placeholder="Empresa" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Nombre de la Empresa</label>
                     </div>
                     <div class="form-group form-floating py-3 mb-3">
-                        <input type="text" class="form-control form-control-lg" id="usuario" placeholder="usuario" style="background-color: #F2F2F2;">
+                        <input type="text" class="form-control form-control-lg" name = "nombre_usuario" id="usuario" placeholder="usuario" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Nombre de Usuario</label>
                     </div>
                     <div class="form-group form-floating py-2 mb-3">
-                        <input type="password" class="form-control form-control-lg" id="clave" placeholder="*****" style="background-color: #F2F2F2;">
+                        <input type="password" class="form-control form-control-lg" name = "clave" id="clave" placeholder="*****" style="background-color: #F2F2F2;" >
                         <label for="floatingInput">Clave</label>
                     </div>
                 </div>
@@ -65,21 +66,21 @@
             <div class="mx-auto" style="max-width: 500px;">
                 <div class="border border-1 rounded-3 p-3">
                     <div class="py-2 mb-4">
-                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;">
+                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;" >
                             <label for="curp" class="form-label">CURP</label>
-                            <input type="file" class="form-control" id="curp">
+                            <input type="file" accept="application/pdf" name = "curp" class="form-control" id="curp">
                         </div>
                     </div>
                     <div class="py-3 mb-4">
-                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;">
+                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;" >
                             <label for="rfc" class="form-label">RFC</label>
-                            <input type="file" class="form-control" id="rfc">
+                            <input type="file" accept="application/pdf" name = "rfc" class="form-control" id="rfc">
                         </div>
                     </div>
                     <div class="py-2 mb-4">
-                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;">
+                        <div class="form-group border border-1 rounded-3 p-3" style="background-color: #F2F2F2;" >
                             <label for="acta" class="form-label">Acta Constitutiva</label>
-                            <input type="file" class="form-control" id="acta">
+                            <input type="file" accept="application/pdf" name = "acta" class="form-control" id="acta">
                         </div>
                     </div>
                 </div>
@@ -91,3 +92,4 @@
         </div>
     </div>
 </form>
+<script src="<?php echo APP_URL; ?>app/views/js/ajaxProveedor.js" ></script>
