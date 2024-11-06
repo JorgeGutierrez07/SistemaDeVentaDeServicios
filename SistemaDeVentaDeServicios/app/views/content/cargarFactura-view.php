@@ -51,6 +51,9 @@
             <div class="px-3">
                 <a href="#" class="btn btn-primary me-2 clarity--home-line"></a>
             </div>
+            <div class="px-3">
+                <a href="<?php echo APP_URL . "logOut/"; ?>" class="me-2 text-white fs-3">Cerrar Sesión</a>
+            </div>
         </div>
     </div>
 </nav>
