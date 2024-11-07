@@ -7,7 +7,15 @@ class viewsModel
     protected function obtenerVistasModelo($vista)
     {
         // Lista blanca de vistas permitidas
-        $listaBlanca = ["cargarFactura", "inicioCliente", "inicioAdmin", "logOut", "validacionRegistros"];
+<<<<<<<<< Temporary merge branch 1
+<<<<<<<<< Temporary merge branch 1
+        $listaBlanca = ["registroProveedor"];
+=========
+        $listaBlanca = ["registroProveedor","login","registroCliente","cargarFactura","inicioCliente"];
+>>>>>>>>> Temporary merge branch 2
+=========
+        $listaBlanca = ["cargarFactura", "inicioCliente", "inicioAdmin", "logOut"];
+>>>>>>>>> Temporary merge branch 2
         // Comprobación si la vista está en la lista blanca
         if (in_array($vista, $listaBlanca)) {
             // Verificar si el archivo de vista existe
@@ -29,8 +37,7 @@ class viewsModel
             $contenido = "login";
         } elseif ($vista == "recuperarContraseña") {
             $contenido = "recuperarContraseña";
-        } 
-        else {
+        } else {
             // Si la vista no está en la lista blanca ni es 'login', mostrar la página de error 404
             $contenido = "404";
         }

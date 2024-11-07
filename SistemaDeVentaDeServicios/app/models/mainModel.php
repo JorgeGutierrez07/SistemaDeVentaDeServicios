@@ -3,12 +3,17 @@
 namespace app\models;
 
 use \PDO;
+<<<<<<< HEAD:SistemaDeVentaDeServicios/app/models/mainModel.php
+use PDOException;
+
+=======
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+>>>>>>> 899df87a69ab6db078624f7f26f377d034c50b5a:app/models/mainModel.php
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
     require_once __DIR__ . "/../../config/server.php";
@@ -19,13 +24,22 @@ class mainModel
     private $db = DB_NAME;
     private $user = DB_USER;
     private $pass = DB_PASS;
+<<<<<<< HEAD:SistemaDeVentaDeServicios/app/models/mainModel.php
     private $port = DB_PORT;
+    private $conexion;
+
+    protected function conectar()
+    {
+        // Modifica la cadena de conexión para incluir el puerto
+        $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
+        $this->conexion = new PDO($dsn, $this->user, $this->pass);
+=======
     private $conexion;
     /*----------  Funcion conectar a BD  ----------*/
     protected function conectar()
     {
-        $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
-        $this->conexion = new PDO($dsn, $this->user, $this->pass);
+        $this->conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
+>>>>>>> 899df87a69ab6db078624f7f26f377d034c50b5a:app/models/mainModel.php
         $this->conexion->exec("SET CHARACTER SET utf8");
         return $this->conexion;
     }
@@ -39,6 +53,44 @@ class mainModel
         return $sql;
     }
 
+    /* GUARDAR */
+
+    protected function guardarDatos($tabla, $datos){
+        
+        // Construir la consulta INSERT
+        $query="INSERT INTO $tabla (";
+
+        $C=0;
+        foreach ($datos as $clave){
+            if($C>=1){ $query.=","; }
+            $query.=$clave["campo_nombre"];
+            $C++;
+        }
+        
+        $query.=") VALUES(";
+
+        $C=0;
+        foreach ($datos as $clave){
+            if($C>=1){ $query.=","; }
+            $query.=$clave["campo_marcador"];
+            $C++;
+        }
+
+        $query.=")";
+        $sql=$this->conectar()->prepare($query);
+
+        foreach ($datos as $clave){
+            $sql->bindParam($clave["campo_marcador"],$clave["campo_valor"]);
+        }
+
+        $sql->execute();
+
+        return $sql;
+    }
+
+    public function getLastInsertId() {
+        return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
+    }
 
     /*----------  Funcion limpiar cadenas  ----------*/
     public function limpiarCadena($cadena)
@@ -57,52 +109,6 @@ class mainModel
         $cadena = stripslashes($cadena);
 
         return $cadena;
-    }
-    
-    /*------ Seleccionar datos -------*/
-    public function seleccionarDatos($tipo,$tabla,$campo,$id){
-        $tipo=$this->limpiarCadena($tipo);
-        $tabla=$this->limpiarCadena($tabla);
-        $campo=$this->limpiarCadena($campo);
-        $id=$this->limpiarCadena($id);
-
-        if($tipo=="Unico"){
-            $sql=$this->conectar()->prepare("SELECT * FROM $tabla WHERE $campo=:ID");
-            $sql->bindParam(":ID",$id);
-        }elseif($tipo=="Normal"){
-            $sql=$this->conectar()->prepare("SELECT $campo FROM $tabla");
-        }
-        $sql->execute();
-
-        return $sql;
-    }
-
-    
-    /*----- Actualizar datos ----*/
-    protected function actualizarDatos($tabla,$datos,$condicion){
-			
-        $query="UPDATE $tabla SET ";
-
-        $C=0;
-        foreach ($datos as $clave){
-            if($C>=1){ $query.=","; }
-            $query.=$clave["campo_nombre"]."=".$clave["campo_marcador"];
-            $C++;
-        }
-
-        $query.=" WHERE ".$condicion["condicion_campo"]."=".$condicion["condicion_marcador"];
-
-        $sql=$this->conectar()->prepare($query);
-
-        foreach ($datos as $clave){
-            $sql->bindParam($clave["campo_marcador"],$clave["campo_valor"]);
-        }
-
-        $sql->bindParam($condicion["condicion_marcador"],$condicion["condicion_valor"]);
-
-        $sql->execute();
-
-        return $sql;
     }
 
 
@@ -158,9 +164,6 @@ class mainModel
     {
         return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
     }
-
-
-
     public function enviarCorreo($destino, $mensaje)
     {
         $mail = new PHPMailer(true);

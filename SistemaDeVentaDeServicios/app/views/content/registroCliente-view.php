@@ -26,11 +26,15 @@
         </div>
     </div>
 </nav>
-<form class="FormularioAjax" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
+<form id="formularioCliente" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-8">
             <div class="mx-auto border border-1 rounded-3 p-4">
+<<<<<<< HEAD:SistemaDeVentaDeServicios/app/views/content/registroCliente-view.php
+                <input type="hidden" name="modulo_cliente" value="registrarCliente">
+=======
                 <input type="hidden" name="modulo_usuario" value="registrarCliente">
+>>>>>>> 899df87a69ab6db078624f7f26f377d034c50b5a:app/views/content/registroCliente-view.php
                 <div class="row">
                     <div class="col-12 col-md-6 pe-m-3">
                         <!-- Name -->
