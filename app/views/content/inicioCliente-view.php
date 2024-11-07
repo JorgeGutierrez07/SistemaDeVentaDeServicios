@@ -21,8 +21,10 @@
                 <h1 class="fs-5 text-dark m-0">INICIO CLIENTE</h1>
             </div>
         </div>
-        <div class="px-3">
-            <a href="#" class="btn btn-primary me-2 clarity--home-line"></a>
+        <div class="d-flex">
+            <div class="px-3">
+                <a href="<?php echo APP_URL . "logOut/"; ?>" class="me-2 text-white fs-3">Cerrar Sesión</a>
+            </div>
         </div>
     </div>
 </nav>
@@ -31,7 +33,7 @@
         <div class="col-12 ">
             <div class="card text-center  h-100" style="background-color: #2ABFBF">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
-                    <h2>¡Bienvenido, Usuario!</h2>
+                    <h2>¡Bienvenido, <?php echo $_SESSION['usuario']?> </h2>
                     <p>Aqui te mostraremos informacion importante para ti.</p>
                 </div>
             </div>

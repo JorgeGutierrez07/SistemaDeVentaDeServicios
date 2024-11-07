@@ -18,7 +18,7 @@
         <span class="navbar-brand text-white fw-bold ms-4 fs-1">LOGO</span>
         <div class="position-absolute start-50 translate-middle-x">
             <div class="bg-white py-2 px-4 rounded">
-                <h1 class="fs-5 text-dark m-0">REGISTRO CLIENTE</h1>
+                <h1 class="fs-5 text-dark m-0">LOGIN</h1>
             </div>
         </div>
         <div class="px-3">
@@ -36,7 +36,7 @@
                             <label class="form-label text-secondary">CORREO ELECTRÓNICO</label>
                             <input
                                 type="email"
-                                name="login_usuario"
+                                name="login_correo"
                                 class="form-control bg-light border-0 py-2"
                                 placeholder="hola@sitioincreible.co"
                                 required />
@@ -56,7 +56,7 @@
                             Iniciar Sesión
                         </button>
 
-                        <a href="#" class="d-block text-secondary text-center mt-3 text-decoration-underline">
+                        <a href="<?php echo APP_URL. "recuperarContraseña/" ?>" class="d-block text-secondary text-center mt-3 text-decoration-underline">
                             ¿Has olvidado la contraseña?
                         </a>
                     </form>
@@ -65,3 +65,8 @@
         </div>
     </div>
 </div>
+<?php
+if (isset($_POST['login_correo']) && isset($_POST['login_clave'])) {
+    $insLogin->iniciarSesionControlador();
+}
+?>

@@ -26,27 +26,28 @@
         </div>
     </div>
 </nav>
-<form>
+<form id="formularioCliente" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-8">
             <div class="mx-auto border border-1 rounded-3 p-4">
+                <input type="hidden" name="modulo_usuario" value="registrarCliente">
                 <div class="row">
-                    <div class="col-12 col-md-6 pe-md-3">
+                    <div class="col-12 col-md-6 pe-m-3">
                         <!-- Name -->
                         <div class="form-group form-floating mb-5">
-                            <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Nombre" style="background-color: #F2F2F2;">
+                            <input type="text" class="form-control form-control-lg" name="nombre" placeholder="Nombre" style="background-color: #F2F2F2;"  required>
                             <label for="nombre">Nombre</label>
                         </div>
 
                         <!-- Last name -->
                         <div class="form-group form-floating mb-5">
-                            <input type="text" class="form-control form-control-lg" id="apellido" placeholder="Apellido" style="background-color: #F2F2F2;">
+                            <input type="text" class="form-control form-control-lg" name="apellido" placeholder="Apellido" style="background-color: #F2F2F2;" >
                             <label for="apellido">Apellidos</label>
                         </div>
 
                         <!-- Email -->
                         <div class="form-group form-floating mb-5">
-                            <input type="email" class="form-control form-control-lg" id="email" placeholder="correo@ejemplo.com" style="background-color: #F2F2F2;">
+                            <input type="text" class="form-control form-control-lg" name="email" placeholder="correo@ejemplo.com" style="background-color: #F2F2F2;" required>
                             <label for="email">Correo Electrónico</label>
                         </div>
                     </div>
@@ -54,13 +55,13 @@
                     <div class="col-12 col-md-6 ps-md-3">
                         <!-- Username -->
                         <div class="form-group form-floating mb-5">
-                            <input type="text" class="form-control form-control-lg" id="usuario" placeholder="usuario" style="background-color: #F2F2F2;">
+                            <input type="text" class="form-control form-control-lg" name="usuario" placeholder="usuario" style="background-color: #F2F2F2;" required>
                             <label for="usuario">Nombre de Usuario</label>
                         </div>
 
                         <!-- Password -->
                         <div class="form-group form-floating mb-5">
-                            <input type="password" class="form-control form-control-lg" id="clave" placeholder="*****" style="background-color: #F2F2F2;">
+                            <input type="password" class="form-control form-control-lg" name="clave" placeholder="*****" style="background-color: #F2F2F2;" required>
                             <label for="clave">Contraseña</label>
                         </div>
                         <!-- Centered button below both columns -->
