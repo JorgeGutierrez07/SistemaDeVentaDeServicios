@@ -463,4 +463,94 @@ class userController extends mainModel
 			return json_encode($alerta);
 		 }
 	}
+
+	public function registrarFacturaControlador(){
+		$razon = $this->limpiarCadena($_POST['razon_factura']);
+		$fecha = $this->limpiarCadena($_POST['fecha_limite_factura']);
+		#La operacion limpiar afecta la ruta
+		$archivo = $_FILES['archivo_factura']['tmp_name'];
+
+		//Comprobacion que no esten vacios
+		if($razon == "" || $fecha == "" || $archivo == "") {
+			$alerta = [
+				"tipo"=>"simple",
+				"titulo"=>"Ocurrio un error inesperado",
+				"text"=>"No has llenado todos los campos solicitados",
+				"icono"=>"error"
+			];
+			return json_encode($alerta);
+		 }
+
+		  //Comprobacion del peso de archivos
+		  $limite_tamano = 2 * 1024 * 1024;
+		  if($_FILES['archivo_factura']['size'] > $limite_tamano) {
+			 $alerta = [
+				 "tipo"=>"simple",
+				 "titulo"=>"Ocurrio un error inesperado",
+				 "text"=>"Los archivos no deben pesar mas de 2 Mb",
+				 "icono"=>"error"
+			 ];
+			 return json_encode($alerta);
+		  }
+
+		  $contenidoArchivo = file_get_contents($archivo);
+
+		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $razon)){
+			$alerta = [
+				"tipo" => "simple",
+				"titulo" => "Error",
+				"text" => "La razon no tiene formato valido",
+				"icono" => "error"
+			];
+			return json_encode($alerta);
+		}
+		$factura_datos = [
+			[
+				"campo_nombre" => "ID_Usuario",
+				"campo_marcador" => ":idUsuario",
+				"campo_valor" => $_SESSION['id']
+			],
+			[
+				"campo_nombre" => "Razon_de_Factura",
+				"campo_marcador" => ":razon",
+				"campo_valor" => $razon
+			],
+			[
+				"campo_nombre" => "Fecha_limite_de_pago",
+				"campo_marcador" => ":fecha",
+				"campo_valor" => $fecha
+			],
+			[
+				"campo_nombre" => "Archivo_Factura",
+				"campo_marcador" => ":archivo",
+				"campo_valor" => $contenidoArchivo
+			],
+			[
+				"campo_nombre" => "Estado",
+				"campo_marcador" => ":estado",
+				"campo_valor" => "pendiente"
+			]
+		 ];
+
+		 $registrar_factura = $this->guardarDatosProveedor("facturas", $factura_datos);
+
+		 if($registrar_factura !== false){
+			$alerta = [
+				"tipo"=>"simple",
+				"titulo"=>"Registro exitoso",
+				"text"=>"Tu factura se envio correctamente",
+				"icono"=>"success",
+			];
+			return json_encode($alerta);
+		 } else {
+			$alerta = [
+				"tipo"=>"simple",
+				"titulo"=>"Ocurrio un error inesperado",
+				"text"=>"La solicitud no se envio, intentelo de nuevo",
+				"icono"=>"error"
+			];
+			return json_encode($alerta);
+		 }
+
+	}
 }

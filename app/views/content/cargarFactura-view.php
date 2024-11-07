@@ -64,21 +64,18 @@
             <div class="card bg-light text-white" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-left">
                     <div class="mb-md-4 mt-md-4">
-                        <form action="" method="POST">
+                        <form class ="FormularioProveedor" action="<?php echo APP_URL; ?>app/ajax/usuarioAjax.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="modulo_usuario" value="registrarFactura">
                             <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="identificador_factura">IDENTIFICADOR DE LA FACTURA</label>
-                                <input type="text" name="identificador_factura" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Identificador de la factura" required />
+                                <label class="form-label" for="factura">RAZÓN DE LA FACTURA</label>
+                                <input type="text" name="razon_factura" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Razón" />
                             </div>
                             <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="identificador_factura">RAZÓN DE LA FACTURA</label>
-                                <input type="text" name="razon_factura" pattern="[a-zA-Z0-9]{4,20}" maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Razón" required />
-                            </div>
-                            <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="identificador_factura">FECHA LIMITE DE PAGO</label>
+                                <label class="form-label" for="factura">FECHA LIMITE DE PAGO</label>
                                 <input type="date" name="fecha_limite_factura" required class="form-control form-control-lg bg-medium-gray fs-6" />
                             </div>
                             <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="identificador_factura">SUBIR FACTURA PDF</label>
+                                <label class="form-label" for="factura">SUBIR FACTURA PDF</label>
                                 <input type="file" accept=".pdf" name="archivo_factura" required class="form-control form-control-lg bg-medium-gray fs-6" />
                             </div>
                             <div class="text-center">

@@ -15,6 +15,8 @@ if (isset($_POST['modulo_usuario'])) {
 		echo $insUsuario->recuperarContraseñaControlador();
 	}elseif ($_POST['modulo_usuario'] == "registrarProveedor") {
 		echo $insUsuario->registrarProveedorControlador();
+	}elseif ($_POST['modulo_usuario'] == "registrarFactura") {
+		echo $insUsuario->registrarFacturaControlador();
 	}
 } else {
 	session_destroy();
