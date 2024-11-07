@@ -69,7 +69,7 @@
 </nav>
 <div class="d-flex justify-content-center my-4 py-5">
     <div class="d-flex justify-content-center gap-3 py-5">
-        <a href="" class="btn custom-btn text-dark fw-bold" style="background-color: #ff914d">Validación de Registros</a>
+        <a href="<?php echo APP_URL."validacionRegistros/"; ?>" class="btn custom-btn text-dark fw-bold" style="background-color: #ff914d">Validación de Registros</a>
         <a href="" class="btn custom-btn text-dark fw-bold" style="background-color: #d9d9d9">Gestión de Facturas</a>
         <a href="" class="btn custom-btn text-dark fw-bold" style="background-color: #ffbd59">Gestión de Usuarios</a>
     </div>
