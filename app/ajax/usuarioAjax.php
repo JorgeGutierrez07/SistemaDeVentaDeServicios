@@ -13,6 +13,8 @@ if (isset($_POST['modulo_usuario'])) {
 		echo $insUsuario->registrarClienteControlador();
 	}elseif ($_POST['modulo_usuario'] == "recuperarContraseña") {
 		echo $insUsuario->recuperarContraseñaControlador();
+	}elseif ($_POST['modulo_usuario'] == "registrarProveedor") {
+		echo $insUsuario->registrarProveedorControlador();
 	}
 } else {
 	session_destroy();
