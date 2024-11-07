@@ -178,7 +178,7 @@ class mainModel
             $mail->addAddress($destino);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperacion de Contraseña';
+            $mail->Subject = 'Aviso de sistema de ventas';
             $mail->Body    = $mensaje;
             $mail->AltBody = strip_tags($mensaje);
             if ( $mail->send()) {

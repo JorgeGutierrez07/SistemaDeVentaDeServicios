@@ -30,10 +30,10 @@
 <div class="container mt-4">
         <h3 class="mb-3">Nuevos Registros</h3>
         <?php
-                use app\controllers\userController;
+                use app\controllers\registrosController;
  
-                $insUsuario = new userController();
+                $insRegistros = new registrosController();
  
-                echo $insUsuario->listarUsuarioControlador(15,$url[0],"");
+                echo $insRegistros->listarUsuarioControlador(1000);
         ?>
 </div>
