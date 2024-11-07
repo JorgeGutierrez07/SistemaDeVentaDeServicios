@@ -29,48 +29,11 @@
 </nav>
 <div class="container mt-4">
         <h3 class="mb-3">Nuevos Registros</h3>
-        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-            <table class="table table-bordered" style="position: sticky; top: 0; background-color: white;">
-                <thead>
-                    <tr>
-                        <th>N° Registro</th>
-                        <th>Nombre</th>
-                        <th>Rol</th>
-                        <th>Correo Electrónico</th>
-                        <th>PDF</th>
-                        <th>Validar solicitud</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Ejemplo de fila, puedes duplicar este bloque para más filas -->
-                    <tr>
-                        <td>1</td>
-                        <td>Nombre</td>
-                        <td>Proveedor</td>
-                        <td>correo@ejemplo.com</td>
-                        <td>
-                            <i class="bi bi-file-pdf-fill text-danger"></i>
-                            <i class="bi bi-file-pdf-fill text-danger"></i>
-                            <i class="bi bi-file-pdf-fill text-danger"></i>
-                        </td>
-                        <td>
-                        <button class="btn btn-aceptar btn-sm" style="background-color: #28a745; color: white;">Aceptar</button>
-                        <button class="btn btn-rechazar btn-sm" style="background-color: #d9534f; color: white;">Rechazar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Nombre</td>
-                        <td>Cliente</td>
-                        <td>correo@ejemplo.com</td>
-                        <td>Sin envío de PDF</td>
-                        <td>
-                            <button class="btn btn-aceptar btn-sm" style="background-color: #28a745; color: white;">Aceptar</button>
-                            <button class="btn btn-rechazar btn-sm" style="background-color: #d9534f; color: white;">Rechazar</button>
-                        </td>
-                    </tr>
-                    <!-- Fin de ejemplo de fila -->
-                </tbody>
-            </table>
-        </div>
+        <?php
+                use app\controllers\userController;
+ 
+                $insUsuario = new userController();
+ 
+                echo $insUsuario->listarUsuarioControlador(15,$url[0],"");
+        ?>
 </div>

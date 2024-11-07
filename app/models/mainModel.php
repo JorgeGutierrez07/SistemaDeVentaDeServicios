@@ -19,11 +19,13 @@ class mainModel
     private $db = DB_NAME;
     private $user = DB_USER;
     private $pass = DB_PASS;
+    private $port = DB_PORT;
     private $conexion;
     /*----------  Funcion conectar a BD  ----------*/
     protected function conectar()
     {
-        $this->conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
+        $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db . ";port=" . $this->port;
+        $this->conexion = new PDO($dsn, $this->user, $this->pass);
         $this->conexion->exec("SET CHARACTER SET utf8");
         return $this->conexion;
     }
@@ -55,6 +57,52 @@ class mainModel
         $cadena = stripslashes($cadena);
 
         return $cadena;
+    }
+    
+    /*------ Seleccionar datos -------*/
+    public function seleccionarDatos($tipo,$tabla,$campo,$id){
+        $tipo=$this->limpiarCadena($tipo);
+        $tabla=$this->limpiarCadena($tabla);
+        $campo=$this->limpiarCadena($campo);
+        $id=$this->limpiarCadena($id);
+
+        if($tipo=="Unico"){
+            $sql=$this->conectar()->prepare("SELECT * FROM $tabla WHERE $campo=:ID");
+            $sql->bindParam(":ID",$id);
+        }elseif($tipo=="Normal"){
+            $sql=$this->conectar()->prepare("SELECT $campo FROM $tabla");
+        }
+        $sql->execute();
+
+        return $sql;
+    }
+
+    
+    /*----- Actualizar datos ----*/
+    protected function actualizarDatos($tabla,$datos,$condicion){
+			
+        $query="UPDATE $tabla SET ";
+
+        $C=0;
+        foreach ($datos as $clave){
+            if($C>=1){ $query.=","; }
+            $query.=$clave["campo_nombre"]."=".$clave["campo_marcador"];
+            $C++;
+        }
+
+        $query.=" WHERE ".$condicion["condicion_campo"]."=".$condicion["condicion_marcador"];
+
+        $sql=$this->conectar()->prepare($query);
+
+        foreach ($datos as $clave){
+            $sql->bindParam($clave["campo_marcador"],$clave["campo_valor"]);
+        }
+
+        $sql->bindParam($condicion["condicion_marcador"],$condicion["condicion_valor"]);
+
+        $sql->execute();
+
+        return $sql;
     }
 
 
@@ -110,6 +158,9 @@ class mainModel
     {
         return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
     }
+
+
+
     public function enviarCorreo($destino, $mensaje)
     {
         $mail = new PHPMailer(true);
