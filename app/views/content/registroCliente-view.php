@@ -26,7 +26,7 @@
         </div>
     </div>
 </nav>
-<form id="formularioCliente" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
+<form class="FormularioAjax" method="POST" action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" autocomplete="off" enctype="multipart/form-data">
     <div class="row justify-content-center py-4">
         <div class="col-12 col-md-8">
             <div class="mx-auto border border-1 rounded-3 p-4">

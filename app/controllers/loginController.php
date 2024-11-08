@@ -17,11 +17,11 @@ class loginController extends mainModel
         # Verificando campos obligatorios #
         if ($correo == "" || $clave == "") {
             echo "<script>
-			        Swal.fire({
-					  icon: 'error',
-					  title: 'Ocurrió un error inesperado',
-					  text: 'No has llenado todos los campos que son obligatorios'
-					});
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ocurrió un error inesperado',
+                        text: 'No has llenado todos los campos que son obligatorios'
+                    });
 				</script>";
         } else {
 

@@ -5,6 +5,7 @@ require_once "../views/inc/session_start.php";
 require_once "../../autoload.php";
 
 use app\controllers\userController;
+use app\controllers\registrosController;
 
 if (isset($_POST['modulo_usuario'])) {
 
@@ -16,7 +17,11 @@ if (isset($_POST['modulo_usuario'])) {
 	}elseif ($_POST['modulo_usuario'] == "registrarProveedor") {
 		echo $insUsuario->registrarProveedorControlador();
 	}
-} else {
+} else if (isset($_POST['modulo_registros'])){
+	$insRegistros = new registrosController();
+	echo $insRegistros->estadoSolicitudControlador($_POST['modulo_registros']);
+} 
+else {
 	session_destroy();
 	header("Location: " . APP_URL . "inicio/");
 }
