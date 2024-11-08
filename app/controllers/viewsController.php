@@ -12,7 +12,7 @@ class viewsController extends viewsModel
             $respuesta = $this->obtenerVistasModelo($vista);
         } else {
             // Si la vista está vacía, establecer la vista predeterminada como 'login'
-            $respuesta = "login";
+            $respuesta = "inicio";
         }
         // Devolver la vista obtenida
         return $respuesta;
