@@ -257,7 +257,7 @@ class mainModel
         }
 
         // Preparar y ejecutar la consulta
-        $stmt = $con->prepare("UPDATE facturas SET Archivo_Factura= ? WHERE ID_Usuario = $id");
+        $stmt = $con->prepare("UPDATE facturas SET Archivo_Factura= ? WHERE Id_Factura = $id");
         // Usar las variables como parámetros pasados por referencia
         $stmt->bind_param("s", $archivo);
         // Ejecutar la consulta

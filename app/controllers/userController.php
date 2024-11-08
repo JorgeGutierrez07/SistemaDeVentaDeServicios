@@ -513,7 +513,7 @@ class userController extends mainModel
 		];
 
 		$registrar_factura = $this->guardarDatosProveedor("facturas", $factura_datos);
-		$registrar_archivo = $this->guardarFactura($contenidoArchivo, $_SESSION['id']);
+		$registrar_archivo = $this->guardarFactura($contenidoArchivo, $registrar_factura);
 
 		if ($registrar_factura !== false) {
 			$alerta = [
