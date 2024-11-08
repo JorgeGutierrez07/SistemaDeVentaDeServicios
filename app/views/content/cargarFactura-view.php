@@ -68,7 +68,7 @@
                             <input type="hidden" name="modulo_usuario" value="registrarFactura">
                             <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
                                 <label class="form-label" for="factura">RAZÓN DE LA FACTURA</label>
-                                <input type="text" name="razon_factura" pattern="" maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Razón" />
+                                <input type="text" name="razon_factura"  maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Razón" />
                             </div>
                             <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
                                 <label class="form-label" for="factura">FECHA LIMITE DE PAGO</label>

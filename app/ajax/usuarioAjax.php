@@ -6,6 +6,7 @@ require_once "../../autoload.php";
 
 use app\controllers\userController;
 use app\controllers\registrosController;
+use app\controllers\facturasController;
 
 if (isset($_POST['modulo_usuario'])) {
 
@@ -22,7 +23,10 @@ if (isset($_POST['modulo_usuario'])) {
 } else if (isset($_POST['modulo_registros'])){
 	$insRegistros = new registrosController();
 	echo $insRegistros->estadoSolicitudControlador($_POST['modulo_registros']);
-} 
+}  else if (isset($_POST['modulo_facturas'])){
+	$insFactura = new facturasController();
+	echo $insFactura->actualizarFacturaControlador();
+}
 else {
 	session_destroy();
 	header("Location: " . APP_URL . "inicio/");

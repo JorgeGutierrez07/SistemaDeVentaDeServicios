@@ -517,7 +517,7 @@ class userController extends mainModel
 
 		if ($registrar_factura !== false) {
 			$alerta = [
-				"tipo" => "simple",
+				"tipo" => "recargar",
 				"titulo" => "Registro exitoso",
 				"text" => "Tu factura se envio correctamente",
 				"icono" => "success",
