@@ -53,13 +53,13 @@ class registrosController extends mainModel
             
                 $archivos = [];
                 if ($rows['CURP'] != null) {
-                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=curp&id='.$rows['ID_Usuario'].'" class="archivo-link"  >CURP</a>';
+                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=curp&id='.$rows['ID_Usuario'].'" class="archivo-link">CURP<i class="bi bi-file-pdf-fill text-danger"></i></a>';
                 }
                 if ($rows['RFC'] != null) {
-                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=rfc&id='.$rows['ID_Usuario'].'" class="archivo-link" >RFC</a>';
+                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=rfc&id='.$rows['ID_Usuario'].'" class="archivo-link">RFC<i class="bi bi-file-pdf-fill text-danger"></i></a>';
                 }
                 if ($rows['Acta_Constitutiva'] != null) {
-                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=acta&id='.$rows['ID_Usuario'].'" class="archivo-link" >Acta Constitutiva</a>';
+                    $archivos[] = '<a href="'.APP_URL.'app/ajax/archivosAjax.php?tipo=acta&id='.$rows['ID_Usuario'].'" class="archivo-link">Acta Constitutiva<i class="bi bi-file-pdf-fill text-danger"></i></a>';
                 }
             
             $tabla .= implode(', ', $archivos) ?: 'No tiene archivos cargados';
@@ -175,7 +175,7 @@ class registrosController extends mainModel
             default:
                 die("Tipo de documento no válido");
         }
-        
+
         // Crear conexión
         $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_PASS, DB_PORT);
         // Realizar la consulta en la base de datos
