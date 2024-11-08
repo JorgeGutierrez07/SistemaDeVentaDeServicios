@@ -61,7 +61,7 @@ class mainModel
     /*---------- Funcion verificar datos (expresion regular) ----------*/
     protected function verificarDatos($filtro, $cadena)
     {
-        if (preg_match("/^" . $filtro . "$/", $cadena)) {
+        if (preg_match($filtro, $cadena)) {
             return false;
         } else {
             return true;

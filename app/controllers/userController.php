@@ -1,6 +1,10 @@
 <?php
 
 namespace app\controllers;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 use app\models\mainModel;
 
@@ -49,18 +53,7 @@ use app\models\mainModel;
 			 $contenidoRFC = file_get_contents($rfc);
 			 $contenidoACTA = file_get_contents($acta);
 
-			 if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nombre)){
-				// Respuesta en caso de éxito
-				$alerta = [
-					"tipo" => "simple",
-					"titulo" => "Error",
-					"texto" => "El nombre no tiene formato valido",
-					"icono" => "error"
-				];
-				return json_encode($alerta);
-		
-			}
-			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $apellidos)){
+			if ($this->verificarDatos("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}$/", $apellidos)){
 				$alerta = [
 					"tipo" => "simple",
 					"titulo" => "Error",
@@ -70,16 +63,16 @@ use app\models\mainModel;
 				return json_encode($alerta);
 
 			}
-			if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nUsuario)){
-				$alerta = [
-					"tipo" => "simple",
-					"titulo" => "Error",
-					"texto" => "El usuario no tiene formato valido",
-					"icono" => "error"
-				];
-				return json_encode($alerta);
-
+			if ($this->verificarDatos("/^[a-zA-Z0-9.]{3,40}$/", $nUsuario)){
+    			$alerta = [
+        		"tipo" => "simple",
+        		"titulo" => "Error",
+        		"texto" => "El usuario no tiene formato valido",
+        		"icono" => "error"
+    			];
+    			return json_encode($alerta);
 			}
+
 			if ($email!=''){
 				if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 					$check_email = $this->ejecutarConsulta("SELECT Correo FROM usuarios WHERE Correo='$email'");

@@ -9,7 +9,7 @@
         mask-image: var(--svg);
         -webkit-mask-repeat: no-repeat;
         mask-repeat: no-repeat;
-        -webkit-mask-size: 100% 100%;
+        -webkit-mask-size: 100% 100%; 
         mask-size: 100% 100%;
     }
 </style>
