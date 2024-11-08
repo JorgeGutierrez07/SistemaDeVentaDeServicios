@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="px-3">
-            <a href="<?php echo APP_URL ?>" class="btn btn-primary me-2 clarity--home-line"></a>
+            <a href="<?php echo APP_URL ?>./inicioAdmin" class="btn btn-primary me-2 clarity--home-line"></a>
         </div>
     </div>
 </nav>

@@ -42,3 +42,10 @@ function alertas_ajax(alerta) {
     });
   }
 }
+
+document.querySelectorAll('.archivo-link').forEach(function(enlace) {
+  enlace.addEventListener('click', function(event) {
+      event.preventDefault(); 
+      window.open(this.href, '_blank'); // Abrir en una nueva pestaña
+  });
+});

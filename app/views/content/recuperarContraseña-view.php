@@ -1,4 +1,3 @@
-
 <style>
     .clarity--home-line {
         display: inline-block;
@@ -53,6 +52,12 @@
                             Enviar Contraseña
                         </button>
                     </form>
+                    <div  class="d-flex justify-content-center">
+                        <div id="spinner" class="spinner-border text-primary mt-5" role="status" style="display: none;">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

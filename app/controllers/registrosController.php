@@ -111,7 +111,7 @@ class registrosController extends mainModel
 					"campo_valor"=>"aceptado"
 				]
 			];
-			$envio_email = $this->enviarCorreo($correo, "Tu solicitud de registro al sistema de ventas ha sido aceptada");
+			$envio_email = $this->enviarCorreo($correo, "Tu solicitud de registro al sistema de ventas ha sido aceptada","Alerta de Registro");
 		}elseif($respuesta == "Rechazar"){
 			$usuario_datos_up=[
 				[
@@ -120,7 +120,7 @@ class registrosController extends mainModel
 					"campo_valor"=>"rechazado"
 				]
 			];
-			$envio_email = $this->enviarCorreo($correo, "Tu solicitud de registro al sistema de ventas ha sido rechazada");
+			$envio_email = $this->enviarCorreo($correo, "Tu solicitud de registro al sistema de ventas ha sido rechazada","Alerta de Registro");
 		}
 
 		$condicion=[
@@ -177,7 +177,7 @@ class registrosController extends mainModel
         }
 
         // Crear conexión
-        $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+        $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
         // Realizar la consulta en la base de datos
         $consulta_datos = "SELECT $columna FROM proveedores WHERE ID_Usuario = $userId";
         $stmt = $conn->prepare($consulta_datos);
