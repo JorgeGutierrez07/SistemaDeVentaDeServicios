@@ -205,7 +205,7 @@ class userController extends mainModel
 					//Se inserta en la Base de datos
 					$check_contraseña = $this->ejecutarConsulta("UPDATE usuarios SET Contraseña = '$nuevaClave' WHERE Correo = '$correo'");
 					if ($check_contraseña->rowCount() == 1) {
-						$envio_email = $this->enviarCorreo($correo, "Tu nueva contraseña es <b>$nuevaContraseña</b>");
+						$envio_email = $this->enviarCorreo($correo, "Tu nueva contraseña es <b>$nuevaContraseña</b>", "Recuperacion de Contraseña");
 						if ($envio_email) {
 							$alerta = [
 								"tipo" => "simple",
@@ -253,7 +253,8 @@ class userController extends mainModel
 		}
 	}
 
-	public function registrarProveedorControlador(){
+	public function registrarProveedorControlador()
+	{
 
 		$nombre = $this->limpiarCadena($_POST['nombre']);
 		$apellidos = $this->limpiarCadena($_POST['apellidos']);
@@ -267,35 +268,37 @@ class userController extends mainModel
 		$acta = $_FILES['acta']['tmp_name'];
 
 		//Comprobacion que no esten vacios
-		if($nombre == "" || $apellidos == "" || $email == "" ||
-		 $nEmpresa == "" || $nUsuario == "" || $password == "" ||
-		 $curp == "" || $rfc == "" || $acta == "") {
+		if (
+			$nombre == "" || $apellidos == "" || $email == "" ||
+			$nEmpresa == "" || $nUsuario == "" || $password == "" ||
+			$curp == "" || $rfc == "" || $acta == ""
+		) {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Ocurrio un error inesperado",
-				"text"=>"No has llenado todos los campos solicitados",
-				"icono"=>"error"
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "No has llenado todos los campos solicitados",
+				"icono" => "error"
 			];
 			return json_encode($alerta);
-		 }
+		}
 
-		 //Comprobacion del peso de archivos
-		 $limite_tamano = 2 * 1024 * 1024;
-		 if($_FILES['curp']['size'] > $limite_tamano || $_FILES['rfc']['size'] > $limite_tamano || $_FILES['acta']['size'] > $limite_tamano) {
+		//Comprobacion del peso de archivos
+		$limite_tamano = 2 * 1024 * 1024;
+		if ($_FILES['curp']['size'] > $limite_tamano || $_FILES['rfc']['size'] > $limite_tamano || $_FILES['acta']['size'] > $limite_tamano) {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Ocurrio un error inesperado",
-				"text"=>"Los archivos no deben pesar mas de 2 Mb",
-				"icono"=>"error"
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "Los archivos no deben pesar mas de 2 Mb",
+				"icono" => "error"
 			];
 			return json_encode($alerta);
-		 }
+		}
 
-		 $contenidoCURP = file_get_contents($curp);
-		 $contenidoRFC = file_get_contents($rfc);
-		 $contenidoACTA = file_get_contents($acta);
+		$contenidoCURP = file_get_contents($curp);
+		$contenidoRFC = file_get_contents($rfc);
+		$contenidoACTA = file_get_contents($acta);
 
-		 if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nombre)){
+		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nombre)) {
 			// Respuesta en caso de éxito
 			$alerta = [
 				"tipo" => "simple",
@@ -304,9 +307,8 @@ class userController extends mainModel
 				"icono" => "error"
 			];
 			return json_encode($alerta);
-	
 		}
-		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $apellidos)){
+		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $apellidos)) {
 			$alerta = [
 				"tipo" => "simple",
 				"titulo" => "Error",
@@ -314,9 +316,8 @@ class userController extends mainModel
 				"icono" => "error"
 			];
 			return json_encode($alerta);
-
 		}
-		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nUsuario)){
+		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $nUsuario)) {
 			$alerta = [
 				"tipo" => "simple",
 				"titulo" => "Error",
@@ -324,12 +325,11 @@ class userController extends mainModel
 				"icono" => "error"
 			];
 			return json_encode($alerta);
-
 		}
-		if ($email!=''){
-			if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+		if ($email != '') {
+			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$check_email = $this->ejecutarConsulta("SELECT Correo FROM usuarios WHERE Correo='$email'");
-				if($check_email->rowCount() > 0){
+				if ($check_email->rowCount() > 0) {
 					$alerta = [
 						"tipo" => "simple",
 						"titulo" => "Error",
@@ -337,7 +337,6 @@ class userController extends mainModel
 						"icono" => "error"
 					];
 					return json_encode($alerta);
-
 				}
 			} else {
 				$alerta = [
@@ -350,14 +349,14 @@ class userController extends mainModel
 			}
 		}
 
-		 if($password != ''){
-			$clave=password_hash($password, PASSWORD_BCRYPT, ["cost"=>10]);
+		if ($password != '') {
+			$clave = password_hash($password, PASSWORD_BCRYPT, ["cost" => 10]);
 		}
 
-		 //Se cambio la linea (max_allowed_packet=16M) en my.ini de xampp para que acepte todos los archivos
+		//Se cambio la linea (max_allowed_packet=16M) en my.ini de xampp para que acepte todos los archivos
 
-		 //Arreglo para insertar en usuario
-		 $usuario_datos = [
+		//Arreglo para insertar en usuario
+		$usuario_datos = [
 			[
 				"campo_nombre" => "Usuario ",
 				"campo_marcador" => ":usuario", #Cambiar por el id recuperado de la nueva insercion 
@@ -388,10 +387,10 @@ class userController extends mainModel
 				"campo_marcador" => ":tusuario",
 				"campo_valor" => "proveedor"
 			]
-		 ];
-		 $registrar_usuario = $this->guardarDatosProveedor("usuarios", $usuario_datos);
+		];
+		$registrar_usuario = $this->guardarDatosProveedor("usuarios", $usuario_datos);
 		//Arreglo para insertar en solicitud
-		 $solicitud_datos = [
+		$solicitud_datos = [
 			[
 				"campo_nombre" => "ID_Usuario",
 				"campo_marcador" => ":idUsuario",
@@ -402,9 +401,9 @@ class userController extends mainModel
 				"campo_marcador" => ":estado",
 				"campo_valor" => "pendiente"
 			]
-		 ];
-		 //Arreglo para insertar en proveedor
-		 $proveedor_datos = [
+		];
+		//Arreglo para insertar en proveedor
+		$proveedor_datos = [
 			[
 				"campo_nombre" => "ID_Usuario ",
 				"campo_marcador" => ":id",
@@ -414,74 +413,74 @@ class userController extends mainModel
 				"campo_nombre" => "Nombre_de_Empresa",
 				"campo_marcador" => ":nEmpresa",
 				"campo_valor" => $nEmpresa
-			]
-		 ];
+			],
+		];
 
-		 if(($registrar_usuario !== false) ){
+		if (($registrar_usuario !== false)) {
 			$registrar_proveedor = $this->guardarDatosProveedor("proveedores", $proveedor_datos);
-			$registrar_archivos = $this->guardarArchivosProveedor($contenidoCURP, $contenidoACTA, $contenidoRFC, $registrar_usuario);
+			$registrar_pdf = $this->guardarArchivosProveedor($contenidoACTA, $contenidoCURP, $contenidoRFC, $registrar_usuario);
 			$registrar_solicitud = $this->guardarDatosProveedor("estado_solicitud", $solicitud_datos);
-			if($registrar_proveedor !==false && $registrar_solicitud !==false){
+			if ($registrar_proveedor !== false && $registrar_solicitud !== false) {
 				$alerta = [
-					"tipo"=>"redireccionar",
-					"titulo"=>"Registro exitoso",
-					"text"=>"Tu solicitud se envio correctamente",
-					"icono"=>"success",
-					"url"=>"/SistemaDeVentaDeServicios/inicio"
+					"tipo" => "redireccionar",
+					"titulo" => "Registro exitoso",
+					"text" => "Tu solicitud se envio correctamente",
+					"icono" => "success",
+					"url" => "/SistemaDeVentaDeServicios/inicio"
 				];
 				return json_encode($alerta);
 			} else {
 				$alerta = [
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrio un error inesperado",
-					"text"=>"La solicitud no se envio, intentelo de nuevo",
-					"icono"=>"error"
+					"tipo" => "simple",
+					"titulo" => "Ocurrio un error inesperado",
+					"text" => "La solicitud no se envio, intentelo de nuevo",
+					"icono" => "error"
 				];
 				return json_encode($alerta);
 			}
-		 } else {
+		} else {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Ocurrio un error inesperado",
-				"text"=>"La solicitud no se envio, intentelo de nuevo",
-				"icono"=>"error"
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "La solicitud no se envio, intentelo de nuevo",
+				"icono" => "error"
 			];
 			return json_encode($alerta);
-		 }
+		}
 	}
-
-	public function registrarFacturaControlador(){
+	public function registrarFacturaControlador()
+	{
 		$razon = $this->limpiarCadena($_POST['razon_factura']);
 		$fecha = $this->limpiarCadena($_POST['fecha_limite_factura']);
 		#La operacion limpiar afecta la ruta
 		$archivo = $_FILES['archivo_factura']['tmp_name'];
 
 		//Comprobacion que no esten vacios
-		if($razon == "" || $fecha == "" || $archivo == "") {
+		if ($razon == "" || $fecha == "" || $archivo == "") {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Ocurrio un error inesperado",
-				"text"=>"No has llenado todos los campos solicitados",
-				"icono"=>"error"
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "No has llenado todos los campos solicitados",
+				"icono" => "error"
 			];
 			return json_encode($alerta);
-		 }
+		}
 
-		  //Comprobacion del peso de archivos
-		  $limite_tamano = 2 * 1024 * 1024;
-		  if($_FILES['archivo_factura']['size'] > $limite_tamano) {
-			 $alerta = [
-				 "tipo"=>"simple",
-				 "titulo"=>"Ocurrio un error inesperado",
-				 "text"=>"Los archivos no deben pesar mas de 2 Mb",
-				 "icono"=>"error"
-			 ];
-			 return json_encode($alerta);
-		  }
+		//Comprobacion del peso de archivos
+		$limite_tamano = 2 * 1024 * 1024;
+		if ($_FILES['archivo_factura']['size'] > $limite_tamano) {
+			$alerta = [
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "Los archivos no deben pesar mas de 2 Mb",
+				"icono" => "error"
+			];
+			return json_encode($alerta);
+		}
 
-		  $contenidoArchivo = file_get_contents($archivo);
+		$contenidoArchivo = file_get_contents($archivo);
 
-		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $razon)){
+		if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}", $razon)) {
 			$alerta = [
 				"tipo" => "simple",
 				"titulo" => "Error",
@@ -511,28 +510,27 @@ class userController extends mainModel
 				"campo_marcador" => ":estado",
 				"campo_valor" => "pendiente"
 			]
-		 ];
+		];
 
-		 $registrar_factura = $this->guardarDatosProveedor("facturas", $factura_datos);
-		 $registrar_archivo = $this->guardarFactura($contenidoArchivo, $_SESSION['id']);
+		$registrar_factura = $this->guardarDatosProveedor("facturas", $factura_datos);
+		$registrar_archivo = $this->guardarFactura($contenidoArchivo, $_SESSION['id']);
 
-		 if($registrar_factura !== false){
+		if ($registrar_factura !== false) {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Registro exitoso",
-				"text"=>"Tu factura se envio correctamente",
-				"icono"=>"success",
+				"tipo" => "simple",
+				"titulo" => "Registro exitoso",
+				"text" => "Tu factura se envio correctamente",
+				"icono" => "success",
 			];
 			return json_encode($alerta);
-		 } else {
+		} else {
 			$alerta = [
-				"tipo"=>"simple",
-				"titulo"=>"Ocurrio un error inesperado",
-				"text"=>"La solicitud no se envio, intentelo de nuevo",
-				"icono"=>"error"
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "La solicitud no se envio, intentelo de nuevo",
+				"icono" => "error"
 			];
 			return json_encode($alerta);
-		 }
-
+		}
 	}
 }

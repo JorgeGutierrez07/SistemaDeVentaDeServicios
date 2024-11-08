@@ -1,7 +1,10 @@
 const formularioContraseña = document.querySelector("#recuperar-form");
+const spinner = document.getElementById("spinner");
 
 formularioContraseña.addEventListener("submit", (e) => {
   e.preventDefault(); // Evita que se recargue la página
+  // Mostrar el spinner
+  spinner.style.display = "block";
 
   let data = new FormData(formularioContraseña);
   let method = formularioContraseña.getAttribute("method");
@@ -34,6 +37,8 @@ formularioContraseña.addEventListener("submit", (e) => {
       });
     })
     .then((respuesta) => {
+           // Ocultar el spinner al recibir la respuesta
+      spinner.style.display = "none";
       // Llama a alertas_ajax con la respuesta procesada
       alertas_ajax(respuesta);
     })

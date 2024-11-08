@@ -3,6 +3,7 @@
 namespace app\models;
 
 use \PDO;
+use mysqli;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -23,7 +24,8 @@ class mainModel
     /*----------  Funcion conectar a BD  ----------*/
     protected function conectar()
     {
-        $this->conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
+        $dsn = "mysql:host=" . $this->server . ";dbname=" . $this->db;
+        $this->conexion = new PDO($dsn, $this->user, $this->pass);
         $this->conexion->exec("SET CHARACTER SET utf8");
         return $this->conexion;
     }
@@ -37,6 +39,43 @@ class mainModel
         return $sql;
     }
 
+    protected function guardarDatosProveedor($tabla, $datos)
+    {
+        $query = "INSERT INTO $tabla (";
+
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_nombre"];
+            $C++;
+        }
+
+        $query .= ") VALUES(";
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_marcador"];
+            $C++;
+        }
+
+        $query .= ")";
+        $sql = $this->conectar()->prepare($query);
+
+        foreach ($datos as $clave) {
+            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
+        }
+
+        if ($sql->execute()) {
+            // Obtener el último ID insertado
+            return $this->conexion->lastInsertId();
+        } else {
+            return false;
+        }
+    }
 
     /*----------  Funcion limpiar cadenas  ----------*/
     public function limpiarCadena($cadena)
@@ -55,6 +94,56 @@ class mainModel
         $cadena = stripslashes($cadena);
 
         return $cadena;
+    }
+
+    /*------ Seleccionar datos -------*/
+    public function seleccionarDatos($tipo, $tabla, $campo, $id)
+    {
+        $tipo = $this->limpiarCadena($tipo);
+        $tabla = $this->limpiarCadena($tabla);
+        $campo = $this->limpiarCadena($campo);
+        $id = $this->limpiarCadena($id);
+
+        if ($tipo == "Unico") {
+            $sql = $this->conectar()->prepare("SELECT * FROM $tabla WHERE $campo=:ID");
+            $sql->bindParam(":ID", $id);
+        } elseif ($tipo == "Normal") {
+            $sql = $this->conectar()->prepare("SELECT $campo FROM $tabla");
+        }
+        $sql->execute();
+
+        return $sql;
+    }
+
+
+    /*----- Actualizar datos ----*/
+    protected function actualizarDatos($tabla, $datos, $condicion)
+    {
+
+        $query = "UPDATE $tabla SET ";
+
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_nombre"] . "=" . $clave["campo_marcador"];
+            $C++;
+        }
+
+        $query .= " WHERE " . $condicion["condicion_campo"] . "=" . $condicion["condicion_marcador"];
+
+        $sql = $this->conectar()->prepare($query);
+
+        foreach ($datos as $clave) {
+            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
+        }
+
+        $sql->bindParam($condicion["condicion_marcador"], $condicion["condicion_valor"]);
+
+        $sql->execute();
+
+        return $sql;
     }
 
 
@@ -110,7 +199,26 @@ class mainModel
     {
         return $this->conexion->lastInsertId(); // Devuelve el último ID insertado
     }
-    public function enviarCorreo($destino, $mensaje)
+    protected function guardarArchivosProveedor($ACTA, $CURP, $RFC, $id)
+    {
+        $con = new mysqli($this->server, $this->user, $this->pass, $this->db);
+        // Verificar la conexión
+        if ($con->connect_error) {
+            die("Conexión fallida: " . $con->connect_error);
+        }
+
+        // Preparar y ejecutar la consulta
+        $stmt = $con->prepare("UPDATE proveedores SET CURP = ?, RFC = ?, Acta_Constitutiva = ? WHERE ID_Usuario = $id");
+        // Usar las variables como parámetros pasados por referencia
+        $stmt->bind_param("sss", $CURP, $RFC, $ACTA);
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function enviarCorreo($destino, $mensaje, $subject)
     {
         $mail = new PHPMailer(true);
         try {
@@ -127,7 +235,7 @@ class mainModel
             $mail->addAddress($destino);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperacion de Contraseña';
+            $mail->Subject = $subject;
             $mail->Body    = $mensaje;
             $mail->AltBody = strip_tags($mensaje);
             if ($mail->send()) {
@@ -140,39 +248,21 @@ class mainModel
         }
     }
 
-    protected function guardarDatosProveedor($tabla, $datos)
+    protected function guardarFactura($archivo, $id)
     {
-        $query = "INSERT INTO $tabla (";
-
-        $C = 0;
-        foreach ($datos as $clave) {
-            if ($C >= 1) {
-                $query .= ",";
-            }
-            $query .= $clave["campo_nombre"];
-            $C++;
+        $con = new mysqli($this->server, $this->user, $this->pass, $this->db);
+        // Verificar la conexión
+        if ($con->connect_error) {
+            die("Conexión fallida: " . $con->connect_error);
         }
 
-        $query .= ") VALUES(";
-        $C = 0;
-        foreach ($datos as $clave) {
-            if ($C >= 1) {
-                $query .= ",";
-            }
-            $query .= $clave["campo_marcador"];
-            $C++;
-        }
-
-        $query .= ")";
-        $sql = $this->conectar()->prepare($query);
-
-        foreach ($datos as $clave) {
-            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
-        }
-
-        if ($sql->execute()) {
-            // Obtener el último ID insertado
-            return $this->conexion->lastInsertId();
+        // Preparar y ejecutar la consulta
+        $stmt = $con->prepare("UPDATE facturas SET Archivo_Factura= ? WHERE ID_Usuario = $id");
+        // Usar las variables como parámetros pasados por referencia
+        $stmt->bind_param("s", $archivo);
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return true;
         } else {
             return false;
         }
