@@ -175,15 +175,9 @@ class registrosController extends mainModel
             default:
                 die("Tipo de documento no válido");
         }
-    
-        $servername = DB_SERVER;
-        $username = DB_USER;
-        $password = DB_PASS;
-        $dbname = DB_NAME;
-        $port = DB_PORT;
-
+        
         // Crear conexión
-        $conn = new \mysqli($servername, $username, $password, $dbname, $port);
+        $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_PASS, DB_PORT);
         // Realizar la consulta en la base de datos
         $consulta_datos = "SELECT $columna FROM proveedores WHERE ID_Usuario = $userId";
         $stmt = $conn->prepare($consulta_datos);
