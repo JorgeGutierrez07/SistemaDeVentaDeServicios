@@ -42,37 +42,3 @@ formularioContraseña.addEventListener("submit", (e) => {
     });
 });
 
-function alertas_ajax(alerta) {
-  if (alerta.tipo == "simple") {
-    Swal.fire({
-      icon: alerta.icono,
-      title: alerta.titulo,
-      text: alerta.text,
-      confirmButtonText: "Aceptar",
-    });
-  } else if (alerta.tipo == "recargar") {
-    Swal.fire({
-      icon: alerta.icono,
-      title: alerta.titulo,
-      text: alerta.text,
-      confirmButtonText: "Aceptar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        location.reload();
-      }
-    });
-  } else if (alerta.tipo == "limpiar") {
-    Swal.fire({
-      icon: alerta.icono,
-      title: alerta.titulo,
-      text: alerta.text,
-      confirmButtonText: "Aceptar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        formulario.reset();
-      }
-    });
-  } else if (alerta.tipo == "redireccionar") {
-    window.location.href = alerta.url;
-  }
-}

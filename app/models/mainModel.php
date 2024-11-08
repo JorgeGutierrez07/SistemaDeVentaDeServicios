@@ -39,6 +39,43 @@ class mainModel
         return $sql;
     }
 
+    protected function guardarDatosProveedor($tabla, $datos)
+    {
+        $query = "INSERT INTO $tabla (";
+
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_nombre"];
+            $C++;
+        }
+
+        $query .= ") VALUES(";
+        $C = 0;
+        foreach ($datos as $clave) {
+            if ($C >= 1) {
+                $query .= ",";
+            }
+            $query .= $clave["campo_marcador"];
+            $C++;
+        }
+
+        $query .= ")";
+        $sql = $this->conectar()->prepare($query);
+
+        foreach ($datos as $clave) {
+            $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
+        }
+
+        if ($sql->execute()) {
+            // Obtener el último ID insertado
+            return $this->conexion->lastInsertId();
+        } else {
+            return false;
+        }
+    }
 
     /*----------  Funcion limpiar cadenas  ----------*/
     public function limpiarCadena($cadena)
