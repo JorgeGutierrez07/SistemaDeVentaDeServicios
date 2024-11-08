@@ -177,7 +177,7 @@ class registrosController extends mainModel
         }
 
         // Crear conexión
-        $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_PASS, DB_PORT);
+        $conn = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
         // Realizar la consulta en la base de datos
         $consulta_datos = "SELECT $columna FROM proveedores WHERE ID_Usuario = $userId";
         $stmt = $conn->prepare($consulta_datos);
