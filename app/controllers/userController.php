@@ -414,26 +414,12 @@ class userController extends mainModel
 				"campo_nombre" => "Nombre_de_Empresa",
 				"campo_marcador" => ":nEmpresa",
 				"campo_valor" => $nEmpresa
-			],
-			[
-				"campo_nombre" => "CURP",
-				"campo_marcador" => ":curp",
-				"campo_valor" => $contenidoCURP
-			],
-			[
-				"campo_nombre" => "RFC",
-				"campo_marcador" => ":rfc",
-				"campo_valor" => $contenidoRFC
-			],
-			[
-				"campo_nombre" => "Acta_Constitutiva",
-				"campo_marcador" => ":acta",
-				"campo_valor" => $contenidoACTA
 			]
 		 ];
 
 		 if(($registrar_usuario !== false) ){
 			$registrar_proveedor = $this->guardarDatosProveedor("proveedores", $proveedor_datos);
+			$registrar_archivos = $this->guardarArchivosProveedor($contenidoCURP, $contenidoACTA, $contenidoRFC, $registrar_usuario);
 			$registrar_solicitud = $this->guardarDatosProveedor("estado_solicitud", $solicitud_datos);
 			if($registrar_proveedor !==false && $registrar_solicitud !==false){
 				$alerta = [
@@ -521,11 +507,6 @@ class userController extends mainModel
 				"campo_valor" => $fecha
 			],
 			[
-				"campo_nombre" => "Archivo_Factura",
-				"campo_marcador" => ":archivo",
-				"campo_valor" => $contenidoArchivo
-			],
-			[
 				"campo_nombre" => "Estado",
 				"campo_marcador" => ":estado",
 				"campo_valor" => "pendiente"
@@ -533,6 +514,7 @@ class userController extends mainModel
 		 ];
 
 		 $registrar_factura = $this->guardarDatosProveedor("facturas", $factura_datos);
+		 $registrar_archivo = $this->guardarFactura($contenidoArchivo, $_SESSION['id']);
 
 		 if($registrar_factura !== false){
 			$alerta = [

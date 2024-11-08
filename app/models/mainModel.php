@@ -177,4 +177,43 @@ class mainModel
             return false;
         }
     }
+
+    protected function guardarArchivosProveedor($ACTA, $CURP, $RFC, $id)
+    {
+        $con = new \mysqli($this->server, $this->user, $this->pass, $this->db);
+        // Verificar la conexión
+        if ($con->connect_error) {
+            die("Conexión fallida: " . $con->connect_error);
+        }
+
+        // Preparar y ejecutar la consulta
+        $stmt = $con->prepare("UPDATE proveedores SET CURP = ?, RFC = ?, Acta_Constitutiva = ? WHERE ID_Usuario = $id");
+        // Usar las variables como parámetros pasados por referencia
+        $stmt->bind_param("sss", $CURP, $RFC, $ACTA);
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected function guardarFactura($archivo, $id){
+        $con = new \mysqli($this->server, $this->user, $this->pass, $this->db);
+        // Verificar la conexión
+        if ($con->connect_error) {
+            die("Conexión fallida: " . $con->connect_error);
+        }
+
+        // Preparar y ejecutar la consulta
+        $stmt = $con->prepare("UPDATE facturas SET Archivo_Factura= ? WHERE ID_Usuario = $id");
+        // Usar las variables como parámetros pasados por referencia
+        $stmt->bind_param("s", $archivo);
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
