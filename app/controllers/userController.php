@@ -533,4 +533,84 @@ class userController extends mainModel
 			return json_encode($alerta);
 		}
 	}
+	public function actualizarUsuarioControlador()
+	{
+		$id_usuario = $this->limpiarCadena($_POST['usuario_id']);
+		$nombre = $this->limpiarCadena($_POST['nombre_usuario']);
+		$correo = $this->limpiarCadena($_POST['correo_usuario']);
+
+		//Comprobacion que no esten vacios
+		if ($nombre == "" || $correo == "") {
+			$alerta = [
+				"tipo" => "simple",
+				"titulo" => "Ocurrio un error inesperado",
+				"text" => "No has llenado todos los campos solicitados",
+				"icono" => "error"
+			];
+			return json_encode($alerta);
+		}
+
+		if ($correo != '') {
+			if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+				$check_email = $this->ejecutarConsulta("SELECT COUNT(*) AS total FROM usuarios WHERE Correo = '$correo' AND ID_Usuario != $id_usuario");
+				$resultado = $check_email->fetch();
+				if ($resultado['total'] > 0) {
+					$alerta = [
+						"tipo" => "simple",
+						"titulo" => "Error",
+						"text" => "El correo ya existe en el sistema",
+						"icono" => "error"
+					];
+					return json_encode($alerta);
+				}
+			} else {
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Error",
+					"text" => "El correo no tiene formato valido",
+					"icono" => "error"
+				];
+				return json_encode($alerta);
+			}
+		}
+
+		// Preparar los datos para la actualización
+		$datos_actualizar = [
+			[
+				"campo_nombre" => "Nombre",
+				"campo_marcador" => ":Nombre",
+				"campo_valor" => $nombre
+			],
+			[
+				"campo_nombre" => "Correo",
+				"campo_marcador" => ":Correo",
+				"campo_valor" => $correo
+			]
+		];
+
+		$condicion = [
+			"condicion_campo" => "ID_Usuario",
+			"condicion_marcador" => ":ID_Usuario",
+			"condicion_valor" => $id_usuario
+		];
+
+		// Ejecutar la actualización
+		$resultado = $this->actualizarDatos("usuarios", $datos_actualizar, $condicion);
+		if ($resultado) {
+			$alerta = [
+				"tipo" => "recargar",
+				"titulo" => "Datos de usuario actualizados",
+				"text" => "Cambios aceptados",
+				"icono" => "success"
+			];
+		} else {
+			$alerta = [
+				"tipo" => "simple",
+				"titulo" => "Ocurrió un error inesperado",
+				"text" => "No se pudieron realizar los cambios",
+				"icono" => "error"
+			];
+		}
+		return json_encode($alerta);
+	}
 }

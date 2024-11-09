@@ -90,7 +90,7 @@ class loginController extends mainModel
                                         }
                                     } elseif ($_SESSION['usuario_tipo'] == "proveedor") {
                                         if (headers_sent()) {
-                                            echo "<script> window.location.href='" . APP_URL . "cargarFactura/'; </script>";
+                                            echo "<script> window.location.href='" . APP_URL . "inicioProveedor/'; </script>";
                                         } else {
                                             header("Location: " . APP_URL . "cargarFactura/");
                                         }

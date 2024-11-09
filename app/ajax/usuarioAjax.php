@@ -19,6 +19,8 @@ if (isset($_POST['modulo_usuario'])) {
 		echo $insUsuario->registrarProveedorControlador();
 	}elseif ($_POST['modulo_usuario'] == "registrarFactura") {
 		echo $insUsuario->registrarFacturaControlador();
+	}elseif ($_POST['modulo_usuario'] == "actualizarUsuario") {
+		echo $insUsuario->actualizarUsuarioControlador();
 	}
 } else if (isset($_POST['modulo_registros'])){
 	$insRegistros = new registrosController();

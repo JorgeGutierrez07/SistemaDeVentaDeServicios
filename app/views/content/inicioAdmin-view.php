@@ -59,7 +59,7 @@
                 <a href="#" class="btn btn-secondary iconamoon--profile-circle-light"></a>
             </div>
             <div class="px-3">
-                <a href="#" class="btn btn-primary me-2 clarity--home-line"></a>
+                <a href="<?php echo APP_URL."inicioAdmin/"; ?>" class="btn btn-primary me-2 clarity--home-line"></a>
             </div>
             <div class="px-3">
                 <a href="<?php echo APP_URL."logOut/"; ?>" class="me-2 text-white fs-3">Cerrar Sesión</a>
@@ -71,6 +71,6 @@
     <div class="d-flex justify-content-center gap-3 py-5">
         <a href="<?php echo APP_URL."validacionRegistros/"; ?>" class="btn custom-btn text-dark fw-bold" style="background-color: #ff914d">Validación de Registros</a>
         <a href="<?php echo APP_URL."gestionFacturas/"; ?>" class="btn custom-btn text-dark fw-bold" style="background-color: #d9d9d9">Gestión de Facturas</a>
-        <a href="" class="btn custom-btn text-dark fw-bold" style="background-color: #ffbd59">Gestión de Usuarios</a>
+        <a href="<?php echo APP_URL."listarUsuario/"; ?>" class="btn custom-btn text-dark fw-bold" style="background-color: #ffbd59">Gestión de Usuarios</a>
     </div>
 </div>

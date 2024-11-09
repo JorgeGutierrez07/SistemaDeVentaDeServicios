@@ -58,33 +58,33 @@
     </div>
 </nav>
 
-<div class="container py-5 h-100"> <!-- Cambié de py-5 a py-3 para reducir el espaciado -->
-    <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-light text-white" style="border-radius: 1rem;">
-                <div class="card-body p-5 text-left">
-                    <div class="mb-md-4 mt-md-4">
-                        <form class ="FormularioProveedor" action="<?php echo APP_URL; ?>app/ajax/usuarioAjax.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="modulo_usuario" value="registrarFactura">
-                            <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="factura">RAZÓN DE LA FACTURA</label>
-                                <input type="text" name="razon_factura"  maxlength="20" class="form-control form-control-lg bg-medium-gray fs-6" placeholder="Razón" />
-                            </div>
-                            <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="factura">FECHA LIMITE DE PAGO</label>
-                                <input type="date" name="fecha_limite_factura" required class="form-control form-control-lg bg-medium-gray fs-6" />
-                            </div>
-                            <div data-mdb-input-init class="form-outline form-white mb-4 text-dark">
-                                <label class="form-label" for="factura">SUBIR FACTURA PDF</label>
-                                <input type="file" accept=".pdf" name="archivo_factura" required class="form-control form-control-lg bg-medium-gray fs-6" />
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-outline-light btn-lg px-5 bg-azul" type="submit">Subir Factura</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container my-5">
+    <div class="row justify-content-center mb-5">
+        <?php
+
+        use app\controllers\facturasController;
+
+        $insFacturas = new facturasController();
+
+        echo $insFacturas->listarConteoFacturasControlador( $_SESSION['id']);
+        ?>
+    </div>
+
+    <h3 class="text-center mb-4">Historial de Facturas</h3>
+
+    <!-- Botón para agregar una nueva factura -->
+    <div class="text-center mb-3">
+        <a href="<?php echo APP_URL . "cargarFactura/"; ?>" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Agregar Nueva Factura
+        </a>
+    </div>
+
+
+    <!-- Contenedor de la tabla con scroll y margen negro -->
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto; margin: 20px auto; border: 2px solid black; width: 70%; border-radius: 10px;">
+        <?php
+
+        echo $insFacturas->listarFacturaProveedorControlador(1000, $_SESSION['id']);
+        ?>
     </div>
 </div>
